@@ -159,10 +159,6 @@ public class StartMenuActivity extends AppCompatActivity {
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");
 
-        // Optionally, specify a URI for the file that should appear in the
-        // system file picker when it loads.
-        //intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri);
-
         startActivityForResult(intent, PICK_FILE);
     }
 
@@ -250,10 +246,6 @@ public class StartMenuActivity extends AppCompatActivity {
         intent.setType("*/*");
         intent.putExtra(Intent.EXTRA_TITLE, filename);
 
-        // Optionally, specify a URI for the directory that should be opened in
-        // the system file picker when your app creates the document.
-        //intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri);
-
         startActivityForResult(intent, CREATE_FILE);
     }
 
@@ -339,8 +331,6 @@ public class StartMenuActivity extends AppCompatActivity {
 
         try{ ParcelFileDescriptor pfd = this.getContentResolver().openFileDescriptor(uri, "w");
             FileOutputStream fos = new FileOutputStream(pfd.getFileDescriptor());
-            //String txt = "Some sample text";
-            //fos.write(txt.getBytes());
             fos.write(fileContents);
             fos.close(); pfd.close();
         } catch (FileNotFoundException e) {

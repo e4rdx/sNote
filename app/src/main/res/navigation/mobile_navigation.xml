@@ -32,5 +32,9 @@
         android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.HelpFragment"
         android:label="Hilfe"
         tools:layout="@layout/fragment_help" />
+    <fragment
+        android:id="@+id/nav_preferences"
+        android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.PreferencesFragment"
+        android:label="Preferences" />
 
 </navigation>

@@ -19,7 +19,7 @@
     </group>
     <group >
         <item
-            android:id="@+id/nav_settings"
+            android:id="@+id/nav_preferences"
             android:icon="@drawable/ic_settings"
             android:title="Einstellungen" />
         <item
