@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_notebook">
+
+    <fragment
+        android:id="@+id/nav_notebook"
+        android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.notebook.NotebookFragment"
+        android:label="@string/menu_notebook"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_tags"
+        android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.tags.TagFragment"
+        android:label="@string/menu_tags"
+        tools:layout="@layout/fragment_tags" />
+
+    <fragment
+        android:id="@+id/nav_tasks"
+        android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.tasks.TaskFragment"
+        android:label="@string/menu_tasks"
+        tools:layout="@layout/fragment_tasks" />
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.AboutFragment"
+        android:label="Über"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/nav_help"
+        android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.HelpFragment"
+        android:label="Hilfe"
+        tools:layout="@layout/fragment_help" />
+
+</navigation>

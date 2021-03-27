@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/file_export"
+        android:title="Export" />
+    <item
+        android:id="@+id/file_shortcut"
+        android:title="Link erstellen" />
+    <item
+        android:id="@+id/file_rename"
+        android:title="Umbenennen" />
+    <item
+        android:id="@+id/file_delete"
+        android:title="Löschen" />
+</menu>
