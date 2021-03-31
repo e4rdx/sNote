@@ -42,4 +42,7 @@
     <string name="toast_enter_name">Enter a name!</string>
     <string name="new_note">New Note</string>
     <string name="create">Create</string>
+    <string name="toast_stt_started">Recording started...</string>
+    <string name="toast_stt_stopped">Recording stopped</string>
+    <string name="texteditor_enter_text">Enter text...</string>
 </resources>

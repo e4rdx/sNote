@@ -39,4 +39,7 @@
     <string name="toast_enter_name">Gib einen Namen an!</string>
     <string name="new_note">Neue Notiz</string>
     <string name="create">Erstellen</string>
+    <string name="toast_stt_started">Aufnahme gestartet...</string>
+    <string name="toast_stt_stopped">Aufnahme gestoppt</string>
+    <string name="texteditor_enter_text">Text eingeben...</string>
 </resources>

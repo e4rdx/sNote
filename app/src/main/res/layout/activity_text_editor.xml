@@ -7,7 +7,7 @@
     tools:context=".Activities.TextNote.TextEditor">
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/texteditor_textfield"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:backgroundTint="#FFFFFF"
@@ -15,18 +15,9 @@
         android:gravity="start|top"
         android:inputType="textMultiLine"
         android:textAlignment="viewStart"
-        app:layout_constraintBottom_toTopOf="@+id/button9"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="saveNote"
-        android:text="Speichern"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
