@@ -4,6 +4,6 @@
     <!--TODO: Add Import Icon-->
     <item
         android:id="@+id/import_file"
-        android:title="Import"
+        android:title="@string/menu_import"
         app:showAsAction="ifRoom"></item>
 </menu>

@@ -20,7 +20,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Oder"
+            android:text="@string/startmenu_or"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="20sp" />
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Wähle eine Datei um sie zu öffnen"
+        android:text="@string/startmenu_chooseFileToOpen"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

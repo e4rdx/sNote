@@ -3,5 +3,5 @@
 
     <item
         android:id="@+id/notecontext_remove"
-        android:title="Löschen" />
+        android:title="@string/menu_delete" />
 </menu>

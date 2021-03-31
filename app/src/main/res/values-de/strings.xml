@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">sNote</string>
     <string name="title_activity_note_creator">NoteCreator</string>
 
     <!-- Preference Titles -->
@@ -15,31 +14,29 @@
     <string name="attachment_title">Download incoming attachments</string>
     <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="new_notebook">New Notebook</string>
+    <string name="new_notebook">Neues Notizbuch</string>
     <string name="title_activity_notebook_displayer">NotebookDisplayer</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title" translatable="false">sNote</string>
     <string name="nav_header_subtitle">me@whatever.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Schließen</string>
 
-    <string name="menu_notebook">Notebook</string>
-    <string name="menu_tags" translatable="false">Tags</string>
-    <string name="menu_tasks">Tasks</string>
-    <string name="menu_delete">Delete</string>
-    <string name="menu_export">Export</string>
-    <string name="menu_import">Import</string>
-    <string name="menu_rename">Rename</string>
-    <string name="menu_create_link">Create Shortcut</string>
-    <string name="startmenu_chooseFileToOpen">Choose a file to open</string>
-    <string name="startmenu_or">Or</string>
-    <string name="menu_help">Help</string>
-    <string name="menu_preferences">Preferences</string>
-    <string name="menu_about">About</string>
-    <string name="filecreation_create">Create</string>
-    <string name="name_of_file">Name of file</string>
-    <string name="toast_enter_name">Enter a name!</string>
-    <string name="new_note">New Note</string>
-    <string name="create">Create</string>
+    <string name="menu_notebook">Notizbuch</string>
+    <string name="menu_tasks">Aufgaben</string>
+    <string name="menu_delete">Löschen</string>
+    <string name="menu_export">Exportieren</string>
+    <string name="menu_import">Importieren</string>
+    <string name="menu_create_link">Link erstellen</string>
+    <string name="menu_rename">Umbenennen</string>
+    <string name="startmenu_chooseFileToOpen">Wähle eine Datei um sie zu öffnen</string>
+    <string name="startmenu_or">Oder</string>
+    <string name="menu_help">Hilfe</string>
+    <string name="menu_preferences">Einstellungen</string>
+    <string name="menu_about">Über</string>
+    <string name="filecreation_create">Erstellen</string>
+    <string name="name_of_file">Name der Datei</string>
+    <string name="toast_enter_name">Gib einen Namen an!</string>
+    <string name="new_note">Neue Notiz</string>
+    <string name="create">Erstellen</string>
 </resources>

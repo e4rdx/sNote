@@ -33,6 +33,8 @@ public class NoteCreator extends AppCompatActivity implements AdapterView.OnItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_creator);
 
+        getSupportActionBar().setTitle(getString(R.string.new_note));
+
         spinner1 = (Spinner) findViewById(R.id.spinner2);
         spinner1.setOnItemSelectedListener(this);
 
@@ -68,7 +70,7 @@ public class NoteCreator extends AppCompatActivity implements AdapterView.OnItem
             }
         }
         else{
-            Toast.makeText(getApplicationContext(), "Gib einen Namen an!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_enter_name), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -77,7 +79,7 @@ public class NoteCreator extends AppCompatActivity implements AdapterView.OnItem
             dispatchTakePictureIntent();
         }
         else{
-            Toast.makeText(getApplicationContext(), "Gib einen Namen an!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_enter_name), Toast.LENGTH_LONG).show();
         }
     }
 

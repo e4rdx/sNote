@@ -60,6 +60,11 @@ public class NotebookDisplayer extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        //Disable Back-Button
+    }
+
+    @Override
     protected void onStop() {
         System.out.println("Stopping");
         //new SNoteManager().saveCurrent("", getApplicationContext());

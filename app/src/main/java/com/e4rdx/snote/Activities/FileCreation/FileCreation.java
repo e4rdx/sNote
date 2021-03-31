@@ -37,6 +37,8 @@ public class FileCreation extends AppCompatActivity {
         setContentView(R.layout.activity_file_creation);
 
         encryptionSetup = findViewById(R.id.LinearLayoutEncryptionSetup);
+
+        getSupportActionBar().setTitle(getString(R.string.new_notebook));
     }
 
     public void encryptionSwitch(View v){
@@ -54,7 +56,6 @@ public class FileCreation extends AppCompatActivity {
         File file = new File(getApplicationContext().getFilesDir() + "/actualFile/attachments/");
         if(file.exists()){
             file.delete();
-            System.out.println("Removing and creating new attachment dir");
             File[] files = file.listFiles();
             if(files != null) {
                 for (int i = 0; i < files.length; i++) {
@@ -94,7 +95,6 @@ public class FileCreation extends AppCompatActivity {
 
         EditText editTextNoteName = findViewById(R.id.editTextNameOfFile);
         if(!editTextNoteName.getText().toString().matches("")) {
-            System.out.println(editTextNoteName.getText().toString());
             String filename = editTextNoteName.getText().toString() + ".snote";
             zipUpFile(getApplicationContext().getFilesDir() + "/actualFile", getApplicationContext().getFilesDir().getPath() + "/sNote/" + filename);
 
@@ -169,21 +169,6 @@ public class FileCreation extends AppCompatActivity {
             writer.close();
         } catch (Exception e) {
             System.out.println(e);
-        }
-    }
-
-    public void checkConfigFile(){
-        File configFile = new File(getApplicationContext().getFilesDir() + "config.json");
-        if(!configFile.exists()){
-            try {
-                FileWriter writer = new FileWriter(configFile);
-                writer.append("{\"fileOpened\"=false}");
-                writer.flush();
-                writer.close();
-
-            } catch (Exception e) {
-                System.out.println(e);
-            }
         }
     }
 }
