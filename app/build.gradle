@@ -7,7 +7,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.e4rdx.two_note"
+        applicationId "com.e4rdx.snote"
         minSdkVersion 28
         targetSdkVersion 29
         versionCode 1
