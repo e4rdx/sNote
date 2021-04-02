@@ -25,6 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 public class NotebookDisplayer extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    public FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +36,10 @@ public class NotebookDisplayer extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //Setup Fab
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("New Note");
                 Intent i = new Intent(getApplicationContext(), NoteCreator.class);
                 startActivity(i);
             }
@@ -66,31 +66,26 @@ public class NotebookDisplayer extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        System.out.println("Stopping");
         //new SNoteManager().saveCurrent("", getApplicationContext());
         super.onStop();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.notebook_displayer, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        System.out.println("Click Menu Item");
         Intent i;
         switch (item.getItemId()){
             case R.id.action_closeNote:
-                System.out.println("Close Note");
                 new ConfigManager(getApplicationContext()).closeFile();
                 i = new Intent(getApplicationContext(), StartMenuActivity.class);
                 startActivity(i);
                 break;
             case R.id.action_clearNote:
-                //noteArray = new JSONArray();
                 i = new Intent(getApplicationContext(), StartMenuActivity.class);
                 startActivity(i);
                 break;

@@ -1,8 +1,12 @@
 package com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.notebook;
 
+import android.content.Context;
+import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +19,9 @@ import androidx.fragment.app.Fragment;
 
 import com.e4rdx.snote.Activities.Main_NotebookDisplay.Note;
 import com.e4rdx.snote.Activities.Main_NotebookDisplay.NoteKT;
+import com.e4rdx.snote.Activities.Main_NotebookDisplay.NotebookDisplayer;
+import com.e4rdx.snote.Activities.Startmenu.StartMenuActivity;
+import com.e4rdx.snote.utils.ConfigManager;
 import com.e4rdx.snote.utils.SNoteManager;
 import com.e4rdx.snote.R;
 
@@ -29,6 +36,8 @@ public class NotebookFragment extends Fragment {
     private NoteKT currentContextItem;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        NotebookDisplayer act = (NotebookDisplayer) getActivity();
+        act.fab.setVisibility(View.VISIBLE);
         myRoot = inflater.inflate(R.layout.fragment_home, container, false);
         return myRoot;
     }

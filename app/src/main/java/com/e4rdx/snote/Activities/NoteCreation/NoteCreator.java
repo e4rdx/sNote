@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.e4rdx.snote.Activities.Attachments.AttachmentEditor;
 import com.e4rdx.snote.Activities.CheckList.ChecklistEditor;
 import com.e4rdx.snote.Activities.TextNote.TextEditor;
+import com.e4rdx.snote.Activities.task.Task_manager;
 import com.e4rdx.snote.R;
 
 import java.io.FileOutputStream;
@@ -63,7 +64,10 @@ public class NoteCreator extends AppCompatActivity implements AdapterView.OnItem
                     Toast.makeText(getApplicationContext(), "Noch nicht verfügbar", Toast.LENGTH_LONG).show();
                     break;
                 case "Aufgabe":
-                    Toast.makeText(getApplicationContext(), "Noch nicht verfügbar", Toast.LENGTH_LONG).show();
+                    i = new Intent(getApplicationContext(), Task_manager.class);
+                    i.putExtra("name", editText_noteName.getText().toString());
+                    i.putExtra("edit", false);
+                    startActivity(i);
                     break;
                 default:
                     break;
