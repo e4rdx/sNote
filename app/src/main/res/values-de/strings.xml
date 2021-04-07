@@ -42,4 +42,17 @@
     <string name="toast_stt_started">Aufnahme gestartet...</string>
     <string name="toast_stt_stopped">Aufnahme gestoppt</string>
     <string name="texteditor_enter_text">Text eingeben...</string>
+    <string name="edit_link">Link bearbeiten</string>
+    <string name="edit_link_description">Bearbeite den Link</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="no">Nein</string>
+    <string name="yes">Ja</string>
+    <string name="submit">Bestätigen</string>
+    <string name="text">Text</string>
+    <string name="task">Aufgabe</string>
+    <string name="link">Link</string>
+    <string name="checkliste">Checkliste</string>
+    <string name="image_from_camera">Bild von Kamera</string>
+    <string name="enter_name">Gib einen Namen ein</string>
+    <string name="new_note_choose_type">Wähle den Typ der Notiz</string>
 </resources>

@@ -2,6 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.e4rdx.snote">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Twonote">
-        <activity android:name=".Activities.task.Task_manager"></activity>
+        <activity android:name=".Activities.link.Link" />
+        <activity android:name=".Activities.task.Task_manager" />
         <activity android:name=".Activities.Attachments.AttachmentEditor" />
         <activity
             android:name=".Activities.Main_NotebookDisplay.NotebookDisplayer"
@@ -35,13 +45,5 @@
         </receiver>
         <receiver android:name=".AlarmReceiver" />
     </application>
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
 </manifest>

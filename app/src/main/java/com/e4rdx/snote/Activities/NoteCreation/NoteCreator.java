@@ -10,12 +10,14 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.e4rdx.snote.Activities.Attachments.AttachmentEditor;
 import com.e4rdx.snote.Activities.CheckList.ChecklistEditor;
 import com.e4rdx.snote.Activities.TextNote.TextEditor;
+import com.e4rdx.snote.Activities.link.Link;
 import com.e4rdx.snote.Activities.task.Task_manager;
 import com.e4rdx.snote.R;
 
@@ -23,11 +25,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
-public class NoteCreator extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private Spinner spinner1;
-    private String noteType;
+public class NoteCreator extends AppCompatActivity {
     private EditText editText_noteName;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private RadioButton rb_imageFromCam;
+    private RadioButton rb_task;
+    private RadioButton rb_link;
+    private RadioButton rb_text;
+    private RadioButton rb_checklist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,41 +41,40 @@ public class NoteCreator extends AppCompatActivity implements AdapterView.OnItem
 
         getSupportActionBar().setTitle(getString(R.string.new_note));
 
-        spinner1 = (Spinner) findViewById(R.id.spinner2);
-        spinner1.setOnItemSelectedListener(this);
-
         editText_noteName = (EditText) findViewById(R.id.editTextNoteName);
 
-        noteType = "Text";
+        rb_imageFromCam = findViewById(R.id.newNote_image_from_cam);
+        rb_checklist = findViewById(R.id.newNote_checkliste);
+        rb_link = findViewById(R.id.newNote_link);
+        rb_task = findViewById(R.id.newNote_task);
+        rb_text = findViewById(R.id.newNote_text);
     }
 
     public void createNote(View v){
         Intent i;
         if(!editText_noteName.getText().toString().matches("")) {
-            switch (noteType) {
-                case "Text":
-                    i = new Intent(getApplicationContext(), TextEditor.class);
-                    i.putExtra("name", editText_noteName.getText().toString());
-                    i.putExtra("edit", false);
-                    startActivity(i);
-                    break;
-                case "Checkliste":
-                    i = new Intent(getApplicationContext(), ChecklistEditor.class);
-                    i.putExtra("name", editText_noteName.getText().toString());
-                    i.putExtra("edit", false);
-                    startActivity(i);
-                    break;
-                case "Untermenü":
-                    Toast.makeText(getApplicationContext(), "Noch nicht verfügbar", Toast.LENGTH_LONG).show();
-                    break;
-                case "Aufgabe":
-                    i = new Intent(getApplicationContext(), Task_manager.class);
-                    i.putExtra("name", editText_noteName.getText().toString());
-                    i.putExtra("edit", false);
-                    startActivity(i);
-                    break;
-                default:
-                    break;
+            if (rb_imageFromCam.isChecked()) {
+                dispatchTakePictureIntent();
+            } else if (rb_text.isChecked()) {
+                i = new Intent(getApplicationContext(), TextEditor.class);
+                i.putExtra("name", editText_noteName.getText().toString());
+                i.putExtra("edit", false);
+                startActivity(i);
+            } else if (rb_task.isChecked()) {
+                i = new Intent(getApplicationContext(), Task_manager.class);
+                i.putExtra("name", editText_noteName.getText().toString());
+                i.putExtra("edit", false);
+                startActivity(i);
+            } else if (rb_link.isChecked()) {
+                i = new Intent(getApplicationContext(), Link.class);
+                i.putExtra("name", editText_noteName.getText().toString());
+                i.putExtra("edit", false);
+                startActivity(i);
+            } else if (rb_checklist.isChecked()) {
+                i = new Intent(getApplicationContext(), ChecklistEditor.class);
+                i.putExtra("name", editText_noteName.getText().toString());
+                i.putExtra("edit", false);
+                startActivity(i);
             }
         }
         else{
@@ -92,7 +96,7 @@ public class NoteCreator extends AppCompatActivity implements AdapterView.OnItem
         try {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         } catch (ActivityNotFoundException e) {
-            // display error state to the user
+            e.printStackTrace();
         }
     }
 
@@ -104,7 +108,6 @@ public class NoteCreator extends AppCompatActivity implements AdapterView.OnItem
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             String name = UUID.randomUUID().toString();
             String dest = getFilesDir() + "/actualFile/attachments/" + name +".png";
-            System.out.println("Dest:"+dest);
             try {
                 FileOutputStream out = new FileOutputStream(dest);
                 imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
@@ -116,23 +119,9 @@ public class NoteCreator extends AppCompatActivity implements AdapterView.OnItem
             Intent i = new Intent(getApplicationContext(), AttachmentEditor.class);
             i.putExtra("name", editText_noteName.getText().toString());
             i.putExtra("edit", false);
-            System.out.println("Dest:"+dest);
             i.putExtra("file", dest);
             i.putExtra("type", "image");
             startActivity(i);
         }
-    }
-
-
-
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        // An item was selected. You can retrieve the selected item using
-        System.out.println(parent.getItemAtPosition(pos));
-        noteType = parent.getItemAtPosition(pos).toString();
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Nothing
     }
 }

@@ -45,4 +45,17 @@
     <string name="toast_stt_started">Recording started...</string>
     <string name="toast_stt_stopped">Recording stopped</string>
     <string name="texteditor_enter_text">Enter text...</string>
+    <string name="edit_link">Edit Link</string>
+    <string name="edit_link_description">Edit the link below</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="text">Text</string>
+    <string name="task">Task</string>
+    <string name="link">Link</string>
+    <string name="checkliste">Checklist</string>
+    <string name="image_from_camera">Image from camera</string>
+    <string name="enter_name">Enter a name</string>
+    <string name="new_note_choose_type">Choose type</string>
 </resources>

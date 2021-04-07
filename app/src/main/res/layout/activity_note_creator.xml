@@ -6,79 +6,79 @@
     android:layout_height="match_parent"
     tools:context=".Activities.NoteCreation.NoteCreator">
 
-    <Spinner
-        android:id="@+id/spinner2"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:entries="@array/noteTypes"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNoteName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="@string/new_note_choose_type"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+    <RadioGroup
+        android:id="@+id/newNote_radioGroup"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
-        android:onClick="createNote"
-        android:text="@string/create"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <RadioButton
+            android:id="@+id/newNote_image_from_cam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/image_from_camera" />
+
+        <RadioButton
+            android:id="@+id/newNote_checkliste"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/checkliste" />
+
+        <RadioButton
+            android:id="@+id/newNote_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task" />
+
+        <RadioButton
+            android:id="@+id/newNote_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text" />
+
+        <RadioButton
+            android:id="@+id/newNote_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/link" />
+    </RadioGroup>
 
     <EditText
         android:id="@+id/editTextNoteName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
         android:ems="10"
-        android:hint="Name"
+        android:hint="@string/enter_name"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newNote_radioGroup" />
 
-    <TextView
-        android:id="@+id/textView5"
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:text="@string/startmenu_or"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton2"
+        android:layout_marginBottom="32dp"
+        android:onClick="createNote"
+        android:text="@string/create"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="82dp"
-        android:layout_height="76dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/btn_dialog" />
-
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="82dp"
-        android:layout_height="76dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
-        app:layout_constraintStart_toEndOf="@+id/imageButton3"
-        app:srcCompat="@drawable/ic_menu_gallery" />
-
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="82dp"
-        android:layout_height="76dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="30dp"
-        android:onClick="imageClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_menu_camera" />
 </androidx.constraintlayout.widget.ConstraintLayout>
