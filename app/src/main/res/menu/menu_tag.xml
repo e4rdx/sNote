@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_tag_addTag"
         android:icon="@drawable/ic_add"
         android:title="Add Tag"
         app:showAsAction="always" />
