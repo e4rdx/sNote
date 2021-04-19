@@ -29,6 +29,7 @@
             android:id="@+id/newNote_image_from_cam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:button="@drawable/ic_image"
             android:checked="true"
             android:text="@string/image_from_camera" />
 
@@ -36,24 +37,28 @@
             android:id="@+id/newNote_checkliste"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:button="@drawable/ic_checkbox"
             android:text="@string/checkliste" />
 
         <RadioButton
             android:id="@+id/newNote_task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:button="@drawable/ic_task"
             android:text="@string/task" />
 
         <RadioButton
             android:id="@+id/newNote_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:button="@drawable/ic_text"
             android:text="@string/text" />
 
         <RadioButton
             android:id="@+id/newNote_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:button="@drawable/ic_external_link"
             android:text="@string/link" />
     </RadioGroup>
 

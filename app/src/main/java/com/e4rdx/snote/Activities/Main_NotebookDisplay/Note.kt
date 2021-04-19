@@ -6,11 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.Gravity
+import android.webkit.WebView
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import com.e4rdx.snote.Activities.Attachments.AttachmentEditor
 import com.e4rdx.snote.Activities.CheckList.ChecklistEditor
 import com.e4rdx.snote.Activities.TextNote.TextEditor
+import com.e4rdx.snote.Activities.link.Link
 import com.e4rdx.snote.R
 import org.json.JSONObject
 import java.io.File
@@ -75,10 +77,12 @@ class NoteKT(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(co
             "image" -> {
                 img_type.setImageResource(R.drawable.ic_image)
             }
+            "link" -> {
+                img_type.setImageResource(R.drawable.ic_external_link)
+            }
         }
         params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT)
         params.rightMargin = 3
-        //params.weight = 2f
         img_type.layoutParams = params
 
         //Create Button for opening the note
@@ -86,13 +90,11 @@ class NoteKT(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(co
         btn_open!!.transformationMethod = null
         btn_open!!.text = noteName
         params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-        //params.weight = 1f
         btn_open!!.layoutParams = params
         btn_open!!.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.invisible, null))
         btn_open!!.textSize = 20f
         btn_open!!.textAlignment = Button.TEXT_ALIGNMENT_VIEW_START
         btn_open!!.setOnClickListener {
-            //Toast.makeText(context, "Opening...", Toast.LENGTH_LONG).show()
             context.startActivity(i)
         }
 
@@ -100,16 +102,16 @@ class NoteKT(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(co
         val btn_dropdown = ImageButton(context)
         btn_dropdown.setImageResource(R.drawable.ic_dropdown)
         btn_dropdown.setOnClickListener {
-            //Toast.makeText(context, "Dropdown under construction...", Toast.LENGTH_LONG).show()
             if(dropdown!!.visibility == VISIBLE) {
                 dropdown!!.visibility = GONE
+                btn_dropdown.setImageResource(R.drawable.ic_dropdown)
             }
             else{
                 dropdown!!.visibility = VISIBLE
+                btn_dropdown.setImageResource(R.drawable.ic_dropup)
             }
         }
         params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-        //params.weight = 1f
         btn_dropdown.layoutParams = params
         btn_dropdown.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.invisible, null))
 
@@ -131,7 +133,7 @@ class NoteKT(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(co
         when(type){
             "text" -> {
                 val t = TextView(context)
-                t.text = JSONObject(jsonData).getString("text")
+                t.text = JSONObject(jsonData.toString()).getString("text")
                 t.textSize = 20F
                 t.setTextColor(resources.getColor(R.color.black))
                 val params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
@@ -140,7 +142,7 @@ class NoteKT(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(co
                 dropdown?.addView(t)
             }
             "checkliste" -> {
-                val entrys = JSONObject(jsonData).getJSONArray("entrys")
+                val entrys = JSONObject(jsonData.toString()).getJSONArray("entrys")
                 for (entrynumber in 0 until entrys.length()) {
                     val jsonObj = entrys.getJSONObject(entrynumber)
                     val text = jsonObj.getString("text")
@@ -151,12 +153,18 @@ class NoteKT(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(co
             }
             "image" -> {
                 val i = ImageView(context)
-                val imgFile = File(JSONObject(jsonData).getString("src"))
+                val imgFile = File(JSONObject(jsonData.toString()).getString("src"))
                 val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
                 i.setImageBitmap(myBitmap)
                 val params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
                 i.layoutParams = params
                 dropdown?.addView(i)
+            }
+            "link" -> {
+                val webview = WebView(context)
+                val link = JSONObject(jsonData.toString()).getString("link")
+                dropdown?.addView(webview)
+                webview.loadUrl(link)
             }
         }
     }
@@ -179,6 +187,13 @@ class NoteKT(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(co
             }
             "image" -> {
                 i = Intent(context, AttachmentEditor::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                i.putExtra("jsonData", jsonData.toString())
+                i.putExtra("edit", true)
+                i.putExtra("index", index)
+            }
+            "link" -> {
+                i = Intent(context, Link::class.java)
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 i.putExtra("jsonData", jsonData.toString())
                 i.putExtra("edit", true)

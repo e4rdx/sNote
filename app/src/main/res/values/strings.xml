@@ -58,4 +58,5 @@
     <string name="image_from_camera">Image from camera</string>
     <string name="enter_name">Enter a name</string>
     <string name="new_note_choose_type">Choose type</string>
+    <string name="enter_link">Enter a link</string>
 </resources>
