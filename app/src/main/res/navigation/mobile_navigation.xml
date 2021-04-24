@@ -7,34 +7,34 @@
 
     <fragment
         android:id="@+id/nav_notebook"
-        android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.notebook.NotebookFragment"
+        android:name="com.e4rdx.snote.activities.notebookDisplayer.fragments.notebook.NotebookFragment"
         android:label="@string/menu_notebook"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_tags"
-        android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.tags.TagFragment"
+        android:name="com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.TagFragment"
         android:label="@string/menu_tags"
         tools:layout="@layout/fragment_tags" />
 
     <fragment
         android:id="@+id/nav_tasks"
-        android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.tasks.TaskFragment"
+        android:name="com.e4rdx.snote.activities.notebookDisplayer.fragments.tasks.TaskFragment"
         android:label="@string/menu_tasks"
         tools:layout="@layout/fragment_tasks" />
     <fragment
         android:id="@+id/nav_about"
-        android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.AboutFragment"
+        android:name="com.e4rdx.snote.activities.notebookDisplayer.fragments.AboutFragment"
         android:label="Über"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/nav_help"
-        android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.HelpFragment"
+        android:name="com.e4rdx.snote.activities.notebookDisplayer.fragments.HelpFragment"
         android:label="Hilfe"
         tools:layout="@layout/fragment_help" />
     <fragment
         android:id="@+id/nav_preferences"
-        android:name="com.e4rdx.snote.Activities.Main_NotebookDisplay.fragments.PreferencesFragment"
+        android:name="com.e4rdx.snote.activities.notebookDisplayer.fragments.PreferencesFragment"
         android:label="Preferences" />
 
 </navigation>

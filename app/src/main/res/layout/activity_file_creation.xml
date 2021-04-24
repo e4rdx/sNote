@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.FileCreation.FileCreation">
+    tools:context=".activities.createNotebook.NotebookCreator">
 
     <Button
         android:id="@+id/buttonCreateFile"

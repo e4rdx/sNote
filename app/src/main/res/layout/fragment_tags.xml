@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.Main_NotebookDisplay.fragments.tags.TagFragment">
+    tools:context=".activities.notebookDisplayer.fragments.tags.TagFragment">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -21,12 +21,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.e4rdx.snote.FlowLayout
+            <com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout
                 android:id="@+id/tags_flowlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.e4rdx.snote.FlowLayout>
+            </com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout>
         </LinearLayout>
     </ScrollView>
 

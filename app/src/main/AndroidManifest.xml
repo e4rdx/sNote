@@ -18,19 +18,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Twonote">
-        <activity android:name=".Activities.link.Link" />
-        <activity android:name=".Activities.task.Task_manager" />
-        <activity android:name=".Activities.Attachments.AttachmentEditor" />
+        <activity android:name=".activities.link.Link" />
+        <activity android:name=".activities.task.Task_manager" />
+        <activity android:name=".activities.attachments.AttachmentEditor" />
         <activity
-            android:name=".Activities.Main_NotebookDisplay.NotebookDisplayer"
+            android:name=".activities.notebookDisplayer.NotebookDisplayer"
             android:label="@string/title_activity_notebook_displayer"
             android:theme="@style/Theme.Twonote.NoActionBar" />
-        <activity android:name=".Activities.TextNote.TextEditor" />
-        <activity android:name=".Activities.FileCreation.FileCreation" />
-        <activity android:name=".Activities.Main_NotebookDisplay.MainActivity" />
-        <activity android:name=".Activities.CheckList.ChecklistEditor" />
-        <activity android:name=".Activities.NoteCreation.NoteCreator" />
-        <activity android:name=".Activities.Startmenu.StartMenuActivity">
+        <activity android:name=".activities.texteditor.TextEditor" />
+        <activity android:name=".activities.createNotebook.NotebookCreator" />
+        <activity android:name=".activities.checklistEditor.ChecklistEditor" />
+        <activity android:name=".activities.noteCreator.NoteCreator" />
+        <activity android:name=".activities.startmenu.StartMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
