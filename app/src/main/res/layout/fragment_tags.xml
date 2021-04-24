@@ -6,25 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".Activities.Main_NotebookDisplay.fragments.tags.TagFragment">
 
-    <LinearLayout
-        android:id="@+id/linearlayout_tags"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.e4rdx.snote.FlowLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <com.e4rdx.snote.FlowLayout
-        android:id="@+id/tags_flowlayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+            <com.e4rdx.snote.FlowLayout
+                android:id="@+id/tags_flowlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.e4rdx.snote.FlowLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+
+        <LinearLayout
+            android:id="@+id/tags_linearLayout_foundNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
