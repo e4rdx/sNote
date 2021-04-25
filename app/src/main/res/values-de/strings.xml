@@ -62,4 +62,5 @@
     <string name="note_cannot_be_undone">Diese Aktion kann nicht rückgängig gemacht werden!</string>
     <string name="checklist_enter_text">Gib Text ein</string>
     <string name="checklist_add">Hinzufügen</string>
+    <string name="attachment_back">Zurück</string>
 </resources>

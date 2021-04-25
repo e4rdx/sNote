@@ -154,8 +154,8 @@ public class AttachmentEditor extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    public void onBackPressed() {
+        back(null);
     }
 
     public void back(View v){

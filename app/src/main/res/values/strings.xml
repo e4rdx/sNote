@@ -65,4 +65,5 @@
     <string name="note_cannot_be_undone">This action cannot be undone!</string>
     <string name="checklist_enter_text">Enter text</string>
     <string name="checklist_add">Add</string>
+    <string name="attachment_back">Back</string>
 </resources>
