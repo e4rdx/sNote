@@ -72,7 +72,7 @@ class Tag(context: Context, name: String, ref: TagFragment): LinearLayout(contex
                 }
             }
         }
-        YesNoPopup(context, "Are you sure?",
-                "Do you really want to remove the tag?", dialogClickListener)
+        YesNoPopup(context, context.getString(R.string.tags_are_you_sure),
+                context.getString(R.string.tags_really_remove), dialogClickListener)
     }
 }

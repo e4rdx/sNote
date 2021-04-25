@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,18 +14,17 @@ import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.text.InputType;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.e4rdx.snote.activities.createNotebook.NotebookCreator;
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
+import com.e4rdx.snote.popups.TextInputPopup;
 import com.e4rdx.snote.utils.SNoteManager;
 import com.e4rdx.snote.R;
 import com.e4rdx.snote.popups.YesNoPopup;
@@ -37,7 +35,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -75,13 +72,14 @@ public class StartMenuActivity extends AppCompatActivity {
 
         //Create Folder if it not already exists
         File f = new File(getApplicationContext().getFilesDir().getPath() + "/sNote");
-        if(!f.isDirectory()) {
+        File dirActualFile = new File(getApplicationContext().getFilesDir().getPath() + "/actualFile");
+        if(!f.isDirectory() || !f.exists()) {
             File folder = new File(getApplicationContext().getFilesDir().getPath() + "/sNote");
-            System.out.println(folder.mkdir());
-            System.out.println("Created Folder");
+            folder.mkdir();
         }
-        else{
-            System.out.println("Folder already exists");
+        if(!dirActualFile.exists()){
+            File folder = new File(getApplicationContext().getFilesDir().getPath() + "/actualFile");
+            folder.mkdir();
         }
 
         loadFiles();
@@ -107,32 +105,18 @@ public class StartMenuActivity extends AppCompatActivity {
     }
 
     private void renameDialog(){
-        final String[] m_Text = {""};
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Umbenennen");
-
-        // Set up the input
-        final EditText input = new EditText(this);
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
-
-        // Set up the buttons
-        builder.setPositiveButton("Umbenennen", new DialogInterface.OnClickListener() {
+        TextInputPopup popup = new TextInputPopup(StartMenuActivity.this, getString(R.string.menu_rename), getString(R.string.notebook_rename));
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                currentContextItem.rename(input.getText().toString());
-                loadFiles();
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(i == DialogInterface.BUTTON_POSITIVE){
+                    currentContextItem.rename(popup.getText());
+                    loadFiles();
+                }
             }
-        });
-        builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
+        };
+        popup.setupButtons(getString(R.string.menu_rename), getString(R.string.cancel), dialogClickListener);
+        popup.show();
     }
 
     @Override
@@ -146,7 +130,6 @@ public class StartMenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.import_file:
-                System.out.println("Import File...");
                 openFileDialog();
                 return true;
         }
@@ -177,8 +160,8 @@ public class StartMenuActivity extends AppCompatActivity {
                 }
             }
         };
-        new YesNoPopup(StartMenuActivity.this, "Datei Löschen",
-                "Soll die Datei wirklich gelöscht werden?", dialogClickListener);
+        new YesNoPopup(StartMenuActivity.this, getString(R.string.notebook_are_you_sure),
+                getString(R.string.notebook_deleting_not_undone), dialogClickListener);
     }
 
 
@@ -209,7 +192,6 @@ public class StartMenuActivity extends AppCompatActivity {
         boolean shortcutExists = false;
         if(shortcuts != null) {
             for (int i = 0; i < shortcuts.size(); i++) {
-                System.out.println(shortcuts.get(i).getId());
                 if (shortcuts.get(i).getId().equals(label)) {
                     Toast.makeText(getApplicationContext(), "Link existiert bereits!", Toast.LENGTH_LONG).show();
                     shortcutExists = true;
@@ -238,8 +220,6 @@ public class StartMenuActivity extends AppCompatActivity {
     }
 
     private void exportFile(String filepath, String filename){
-        System.out.println(filepath);
-        
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");
@@ -264,8 +244,6 @@ public class StartMenuActivity extends AppCompatActivity {
             }
 
             filecontents = byteBuffer.toByteArray();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -273,7 +251,6 @@ public class StartMenuActivity extends AppCompatActivity {
         //Write bytes to other file
         String fullFilename = new SNoteManager().getFileName(uri, getApplicationContext());
         File f = new File(getFilesDir() + "/sNote/" + fullFilename);
-        System.out.println(f);
         if(!f.exists()){
             try {
                 f.createNewFile();
@@ -283,7 +260,7 @@ public class StartMenuActivity extends AppCompatActivity {
             }
         }
         else {
-            Toast.makeText(getApplicationContext(), "Datei existiert bereits!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_file_already_exists), Toast.LENGTH_LONG).show();
             return;
         }
         try {
@@ -303,16 +280,15 @@ public class StartMenuActivity extends AppCompatActivity {
             if (requestCode == CREATE_FILE) {
                 if (data != null) {
                     currentUri = data.getData();
-                    System.out.println(currentUri);
                     writeFileToURI(currentUri);
-                    Toast.makeText(getApplicationContext(), "Datei erfolgreich exportiert!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_file_succesfully_exported), Toast.LENGTH_LONG).show();
                 }
             }
             else if(requestCode == PICK_FILE){
                 if (data != null) {
                     currentUri = data.getData();
-                    System.out.println(currentUri);
                     importNoteFile(currentUri);
+                    loadFiles();
                 }
             }
         }
@@ -323,7 +299,6 @@ public class StartMenuActivity extends AppCompatActivity {
         byte[] fileContents = null;
         try {
             fileContents =  Files.readAllBytes(path);
-            System.out.println("Got bytes!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -332,8 +307,6 @@ public class StartMenuActivity extends AppCompatActivity {
             FileOutputStream fos = new FileOutputStream(pfd.getFileDescriptor());
             fos.write(fileContents);
             fos.close(); pfd.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -341,7 +314,6 @@ public class StartMenuActivity extends AppCompatActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        System.out.println("ContextMenu!");
         super.onCreateContextMenu(menu, v, menuInfo);
         currentContextItem = (SNoteFile)v.getParent();
         MenuInflater inflater = getMenuInflater();
@@ -349,44 +321,26 @@ public class StartMenuActivity extends AppCompatActivity {
     }
 
     public void loadFiles(){
-        System.out.println("Loading files...");
-
         LinearLayout fileList = findViewById(R.id.LinearLayoutFileList);
         fileList.removeAllViews();
 
         String path = getApplicationContext().getFilesDir()+"/sNote/";
         File directory = new File(path);
         if(directory.isDirectory()) {
-            System.out.println("Getting files...");
             File[] files = directory.listFiles();
             if(files != null && files.length > 0) {
-                System.out.println("List files...");
                 for (int i = 0; i < files.length; i++) {
-                    //Log.d("Files", "FileName:" + files[i].getName());
                     SNoteFile s = new SNoteFile(this, files[i].getName(), path);
                     registerForContextMenu(s.myButton);
                     fileList.addView(s);
                 }
             }
         }
-        System.out.println("Done");
     }
 
     public void newNotebook(View v){
         Intent i = new Intent(getApplicationContext(), NotebookCreator.class);
         startActivity(i);
-    }
-
-    private void updateConfig(String newConfig){
-        File configFile = new File(getApplicationContext().getFilesDir() + "config.json");
-        try {
-            FileWriter writer = new FileWriter(configFile);
-            writer.append(newConfig);
-            writer.flush();
-            writer.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 
     private void checkConfigFile(){
@@ -399,7 +353,7 @@ public class StartMenuActivity extends AppCompatActivity {
                 writer.close();
 
             } catch (Exception e) {
-                System.out.println(e);
+                e.printStackTrace();
             }
         }
     }
@@ -415,8 +369,9 @@ public class StartMenuActivity extends AppCompatActivity {
                 text.append('\n');
             }
             br.close();
-        } catch (IOException e) { }
-        String result = text.toString();
-        return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text.toString();
     }
 }

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,29 +38,28 @@ public class NotebookFragment extends Fragment {
 
     @Override
     public void onStop() {
-        System.out.println("Stopping");
         LinearLayout noteList = myRoot.findViewById(R.id.LinearLayoutHomeNoteList);
 
         JSONArray notes = new JSONArray();
-        for(int i = 0; i < noteList.getChildCount(); i++){
-            Note currentEntry = (Note) noteList.getChildAt(i);
-            try {
-                notes.put(new JSONObject(currentEntry.getJsonData()));
-            } catch (JSONException e) {
-                e.printStackTrace();
+        if(noteList.getChildCount() > 0) {
+            for (int i = 0; i < noteList.getChildCount(); i++) {
+                Note currentEntry = (Note) noteList.getChildAt(i);
+                try {
+                    notes.put(new JSONObject(currentEntry.getJsonData()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
-
-        //Debugging
-        System.out.println(notes.toString());
-        System.out.println("\n################################\n");
-        System.out.println(noteArray.toString());
 
         try {
             //jsonObj.put("notes", noteArray);
             jsonObj.put("notes", notes);
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (NullPointerException e){
+            Toast.makeText(getActivity().getApplicationContext(), "Error while saving :(", Toast.LENGTH_LONG).show();
+            jsonObj = new JSONObject();
         }
 
         new SNoteManager().saveCurrent(jsonObj.toString(), getActivity().getApplicationContext());
@@ -78,8 +78,6 @@ public class NotebookFragment extends Fragment {
         if(b != null){
             if(b.getBoolean("edit")){
                 indexEditetString = b.getInt("index");
-                System.out.print("index: ");
-                System.out.println(indexEditetString);
                 try {
                     editetNote = new JSONObject(b.getString("jsonData"));
                 } catch (JSONException e) {
@@ -89,10 +87,8 @@ public class NotebookFragment extends Fragment {
             else{
                 try {
                     additionalNote = new JSONObject(b.getString("jsonData"));
-                    System.out.println(b.getString("jsonData"));
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    System.out.println("no new note");
                 }
             }
         }
@@ -102,13 +98,11 @@ public class NotebookFragment extends Fragment {
             noteArray = jsonObj.getJSONArray("notes");
             if(additionalNote != null){
                 noteArray.put(additionalNote);
-                System.out.println(additionalNote.toString());
             }
             else if(editetNote != null){
                 noteArray.put(indexEditetString, editetNote);
             }
             for(int i = 0; i < noteArray.length(); i++){
-                System.out.println("Adding notes...");
                 JSONObject noteObj = noteArray.getJSONObject(i);
                 //Note.kt noteButton = new Note.kt(getActivity().getApplicationContext(), noteObj, i);
                 Note noteButton = new Note(getActivity().getApplicationContext(), noteObj, i);
@@ -117,7 +111,6 @@ public class NotebookFragment extends Fragment {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            System.out.println("Fail adding noteList");
         }
 
 
@@ -128,8 +121,10 @@ public class NotebookFragment extends Fragment {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.notecontext_remove:
-                System.out.println("Removing note...");
-                currentContextItem.remove();
+                currentContextItem.remove(getActivity());
+                break;
+            case R.id.notecontext_rename:
+                currentContextItem.rename(getActivity());
                 break;
         }
         return super.onContextItemSelected(item);

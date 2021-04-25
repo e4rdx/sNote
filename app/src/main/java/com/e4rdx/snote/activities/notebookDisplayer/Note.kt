@@ -2,7 +2,9 @@
 
 package com.e4rdx.snote.activities.notebookDisplayer
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.Gravity
@@ -14,9 +16,13 @@ import com.e4rdx.snote.activities.checklistEditor.ChecklistEditor
 import com.e4rdx.snote.activities.texteditor.TextEditor
 import com.e4rdx.snote.activities.link.Link
 import com.e4rdx.snote.R
+import com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout
+import com.e4rdx.snote.popups.TextInputPopup
+import com.e4rdx.snote.popups.YesNoPopup
 import org.json.JSONObject
 import java.io.File
 
+@SuppressLint("ViewConstructor")
 @Suppress("LocalVariableName", "PropertyName")
 class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(context) {
     var i = Intent()
@@ -129,6 +135,25 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
         createDropdown(noteType)
     }
 
+    fun rename(context: Context){
+        val popup = TextInputPopup(context, context.getString(R.string.note_rename), context.getString(R.string.note_enter_new_name))
+        val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    val newName = popup.getText()
+                    btn_open!!.setText(newName)
+                    val json = JSONObject(jsonData.toString())
+                    json.put("name", newName)
+                    jsonData = json.toString()
+                }
+                DialogInterface.BUTTON_NEGATIVE -> {
+                }
+            }
+        }
+        popup.setupButtons(context.getString(R.string.menu_rename), context.getString(R.string.cancel), dialogClickListener)
+        popup.show()
+    }
+
     private fun createDropdown(type: String){
         when(type){
             "text" -> {
@@ -202,8 +227,17 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
         }
     }
 
-    fun remove(){
-        val parent = this.parent as LinearLayout
-        parent.removeView(this)
+    fun remove(context: Context){
+        val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    val parent = this.parent as LinearLayout
+                    parent.removeView(this)
+                }
+                DialogInterface.BUTTON_NEGATIVE -> {
+                }
+            }
+        }
+        YesNoPopup(context, context.getString(R.string.note_are_you_sure), context.getString(R.string.note_cannot_be_undone), dialogClickListener)
     }
 }

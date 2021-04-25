@@ -23,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class NotebookDisplayer extends AppCompatActivity {
-
     private AppBarConfiguration mAppBarConfiguration;
     public FloatingActionButton fab;
 
@@ -80,12 +79,8 @@ public class NotebookDisplayer extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent i;
         switch (item.getItemId()){
-            case R.id.action_closeNote:
+            case R.id.action_closeNotebook:
                 new ConfigManager(getApplicationContext()).closeFile();
-                i = new Intent(getApplicationContext(), StartMenuActivity.class);
-                startActivity(i);
-                break;
-            case R.id.action_clearNote:
                 i = new Intent(getApplicationContext(), StartMenuActivity.class);
                 startActivity(i);
                 break;

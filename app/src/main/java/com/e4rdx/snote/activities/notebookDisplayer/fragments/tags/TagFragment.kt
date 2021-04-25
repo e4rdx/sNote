@@ -79,8 +79,8 @@ class TagFragment : Fragment() {
 
     private fun newTagDialog() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("New Tag")
-        builder.setMessage("Enter the name for the new tag")
+        builder.setTitle(getString(R.string.tags_newTag))
+        builder.setMessage(getString(R.string.tags_enter_tag_name))
 
         // Set up the input
         val input = EditText(requireContext())
@@ -89,12 +89,12 @@ class TagFragment : Fragment() {
         builder.setView(input)
 
         // Set up the buttons
-        builder.setPositiveButton("Create") { dialog, which ->
+        builder.setPositiveButton(getString(R.string.create)) { dialog, which ->
                 val flowlayoutTags = requireActivity().findViewById<FlowLayout>(R.id.tags_flowlayout)
                 flowlayoutTags.addView(Tag(requireContext(), input.text.toString(), this))
                 saveTags()
         }
-        builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+        builder.setNegativeButton(getString(R.string.cancel)) { dialog, which -> dialog.cancel() }
         builder.show()
     }
 
