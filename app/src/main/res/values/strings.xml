@@ -63,4 +63,6 @@
     <string name="notebook_deleting_not_undone">Deleting this notebook cannot be undone</string>
     <string name="note_are_you_sure">Are you sure?</string>
     <string name="note_cannot_be_undone">This action cannot be undone!</string>
+    <string name="checklist_enter_text">Enter text</string>
+    <string name="checklist_add">Add</string>
 </resources>

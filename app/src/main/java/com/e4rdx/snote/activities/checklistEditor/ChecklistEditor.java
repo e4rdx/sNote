@@ -1,9 +1,13 @@
 package com.e4rdx.snote.activities.checklistEditor;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -67,6 +71,26 @@ public class ChecklistEditor extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        saveNote();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_checklisteditor, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.menu_checklisteditor_save){
+            saveNote();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void addNote(View v){
         if(!noteInput.getText().toString().matches("")) {
             LinearLayout parent = (LinearLayout) findViewById(R.id.noteList);
@@ -76,11 +100,11 @@ public class ChecklistEditor extends AppCompatActivity {
             noteInput.setText("");
         }
         else{
-            Toast.makeText(getApplicationContext(), "Gib Text ein!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.checklist_enter_text), Toast.LENGTH_LONG).show();
         }
     }
 
-    public void saveNote(View v){
+    private void saveNote(){
         entrys = new JSONArray();
         LinearLayout parent = (LinearLayout)findViewById(R.id.noteList);
         for(int i = 0; i < parent.getChildCount(); i++){

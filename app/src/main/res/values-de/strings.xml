@@ -60,4 +60,6 @@
     <string name="notebook_deleting_not_undone">Das Löschen des Notizbuches kann nicht rückgängig gemacht werden</string>
     <string name="note_are_you_sure">Bist du sicher?</string>
     <string name="note_cannot_be_undone">Diese Aktion kann nicht rückgängig gemacht werden!</string>
+    <string name="checklist_enter_text">Gib Text ein</string>
+    <string name="checklist_add">Hinzufügen</string>
 </resources>

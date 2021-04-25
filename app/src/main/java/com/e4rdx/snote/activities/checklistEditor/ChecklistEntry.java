@@ -30,7 +30,6 @@ public class ChecklistEntry extends LinearLayout {
         box.setChecked(isChecked);
         box.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                System.out.println("Box Click");
                 isChecked = box.isChecked();
             }
         });
