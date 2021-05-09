@@ -16,7 +16,6 @@ import com.e4rdx.snote.activities.checklistEditor.ChecklistEditor
 import com.e4rdx.snote.activities.texteditor.TextEditor
 import com.e4rdx.snote.activities.link.Link
 import com.e4rdx.snote.R
-import com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout
 import com.e4rdx.snote.popups.TextInputPopup
 import com.e4rdx.snote.popups.YesNoPopup
 import org.json.JSONObject
@@ -46,7 +45,6 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
         val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         layoutParams.bottomMargin = 7
         buttonsRoot.layoutParams = layoutParams
-        //buttonsRoot.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.new_green, null))
         buttonsRoot.setBackgroundResource(R.drawable.background_note)
 
         val leftLinearLayout = LinearLayout(context)
@@ -101,6 +99,7 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
         btn_open!!.textSize = 20f
         btn_open!!.textAlignment = Button.TEXT_ALIGNMENT_VIEW_START
         btn_open!!.setOnClickListener {
+            configureIntent(noteType)
             context.startActivity(i)
         }
 
@@ -131,7 +130,7 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
         this.addView(buttonsRoot)
         this.addView(dropdown)
 
-        configureIntent(noteType)
+        //configureIntent(noteType)
         createDropdown(noteType)
     }
 
@@ -172,7 +171,17 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
                     val jsonObj = entrys.getJSONObject(entrynumber)
                     val text = jsonObj.getString("text")
                     val state = jsonObj.getBoolean("state")
-                    val checklistEntry = ChecklistDropdown(context, text, state)
+                    val checklistEntry = ChecklistDropdown(context, text, state, entrynumber)
+                    checklistEntry.checkBox!!.setOnClickListener {
+                        val allEntrys = JSONObject(jsonData.toString()).getJSONArray("entrys")
+                        val currentEntry = allEntrys.getJSONObject(checklistEntry.index)
+                        currentEntry.put("state", checklistEntry.checkBox!!.isChecked)
+                        allEntrys.put(checklistEntry.index, currentEntry)
+                        jsonData = JSONObject(jsonData.toString()).put("entrys", allEntrys).toString()
+                    }
+                    val params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+                    params.leftMargin = 50
+                    dropdown!!.layoutParams = params
                     dropdown?.addView(checklistEntry)
                 }
             }

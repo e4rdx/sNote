@@ -63,4 +63,7 @@
     <string name="checklist_enter_text">Gib Text ein</string>
     <string name="checklist_add">Hinzufügen</string>
     <string name="attachment_back">Zurück</string>
+    <string name="start_menu_openExternal">Externes Notizbuch öffnen</string>
+    <string name="undo">Rückgängig</string>
+    <string name="checklist_removed_entry">Eintrag wurde entfernt</string>
 </resources>

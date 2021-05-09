@@ -66,4 +66,7 @@
     <string name="checklist_enter_text">Enter text</string>
     <string name="checklist_add">Add</string>
     <string name="attachment_back">Back</string>
+    <string name="start_menu_openExternal">Open external notebook</string>
+    <string name="undo">Undo</string>
+    <string name="checklist_removed_entry">Removed entry</string>
 </resources>
