@@ -24,6 +24,7 @@
         android:onClick="encryptionSwitch"
         android:text="Verschlüsseln"
         android:textSize="20sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switchSaveToDrive" />
 
@@ -34,6 +35,7 @@
         android:layout_marginTop="20dp"
         android:text="Auf Google Drive sichern"
         android:textSize="20sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNameOfFile" />
 
