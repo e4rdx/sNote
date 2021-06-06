@@ -3,6 +3,7 @@ package com.e4rdx.snote.activities.checklistEditor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,10 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
 import com.e4rdx.snote.R;
+import com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout;
+import com.e4rdx.snote.activities.startmenu.StartMenuActivity;
+import com.e4rdx.snote.popups.TextInputPopup;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,6 +57,12 @@ public class ChecklistEditor extends AppCompatActivity {
                     parent.addView(new ChecklistEntry(this, actualEntry.getString("text"), actualEntry.getBoolean("state"), parent));
                 }
                 index = extras.getInt("index");
+                JSONArray tags = recievedJson.getJSONArray("tags");
+                for (int i = 0; i < tags.length(); i++){
+                    FlowLayout fl = (FlowLayout) findViewById(R.id.checklistEditor_tags_flowlayout);
+                    Tag t = new Tag(ChecklistEditor.this, tags.getString(i));
+                    fl.addView(t);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -71,6 +82,32 @@ public class ChecklistEditor extends AppCompatActivity {
         }
     }
 
+    public void addTag(View v){
+        TextInputPopup popup = new TextInputPopup(ChecklistEditor.this, getString(R.string.menu_rename), getString(R.string.notebook_rename));
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(i == DialogInterface.BUTTON_POSITIVE){
+                    Tag tag = new Tag(ChecklistEditor.this, popup.getText());
+                    FlowLayout fl = (FlowLayout) findViewById(R.id.checklistEditor_tags_flowlayout);
+                    fl.addView(tag);
+                }
+            }
+        };
+        popup.setupButtons(getString(R.string.menu_rename), getString(R.string.cancel), dialogClickListener);
+        popup.show();
+    }
+
+    private JSONArray getTags(){
+        JSONArray tags = new JSONArray();
+        FlowLayout fl = (FlowLayout) findViewById(R.id.checklistEditor_tags_flowlayout);
+        for(int i = 1; i < fl.getChildCount(); i++){
+            Tag current = (Tag) fl.getChildAt(i);
+            tags.put(current.getName());
+        }
+        return tags;
+    }
+
     @Override
     public void onBackPressed() {
         saveNote();
@@ -87,6 +124,15 @@ public class ChecklistEditor extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.menu_checklisteditor_save){
             saveNote();
+        }
+        else if(item.getItemId() == R.id.menu_checklisteditor_toggleTags){
+            ScrollView tagEditor = findViewById(R.id.scrollView_checklisteditor_tags);
+            if(tagEditor.getVisibility() == View.VISIBLE){
+                tagEditor.setVisibility(View.GONE);
+            }
+            else{
+                tagEditor.setVisibility(View.VISIBLE);
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -113,12 +159,14 @@ public class ChecklistEditor extends AppCompatActivity {
         }
         try {
             jsonData.put("entrys", entrys);
+            jsonData.put("tags", getTags());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         Intent i = new Intent(getApplicationContext(), NotebookDisplayer.class);
         i.putExtra("jsonData", jsonData.toString());
+        System.out.println(jsonData.toString());
         i.putExtra("edit", editMode);
         i.putExtra("index", index);
         startActivity(i);

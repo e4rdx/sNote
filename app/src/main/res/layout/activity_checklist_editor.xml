@@ -7,14 +7,43 @@
     tools:context=".activities.checklistEditor.ChecklistEditor">
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:id="@+id/scrollView_checklisteditor_tags"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout
+                android:id="@+id/checklistEditor_tags_flowlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="addTag"
+                    android:text="Add Tag" />
+            </com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:scrollbarStyle="insideInset"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/scrollView_checklisteditor_tags">
 
         <LinearLayout
             android:id="@+id/noteList"

@@ -3,6 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_checklisteditor_toggleTags"
+        android:icon="@drawable/ic_tag"
+        android:title="Item"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/menu_checklisteditor_save"
         android:icon="@drawable/ic_save"
         android:title="Title"
