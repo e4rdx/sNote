@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.InputType;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
