@@ -8,6 +8,11 @@
         android:title="Item"
         app:showAsAction="always" />
     <item
+        android:id="@+id/menu_checklistEditor_addTag"
+        android:icon="@drawable/ic_add"
+        android:title="Title"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/menu_checklisteditor_save"
         android:icon="@drawable/ic_save"
         android:title="Title"

@@ -3,6 +3,7 @@ package com.e4rdx.snote.activities.checklistEditor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +19,6 @@ import android.widget.Toast;
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
 import com.e4rdx.snote.R;
 import com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout;
-import com.e4rdx.snote.activities.startmenu.StartMenuActivity;
 import com.e4rdx.snote.popups.TextInputPopup;
 
 import org.json.JSONArray;
@@ -82,8 +82,8 @@ public class ChecklistEditor extends AppCompatActivity {
         }
     }
 
-    public void addTag(View v){
-        TextInputPopup popup = new TextInputPopup(ChecklistEditor.this, getString(R.string.menu_rename), getString(R.string.notebook_rename));
+    public void addTag(){
+        TextInputPopup popup = new TextInputPopup(ChecklistEditor.this, getString(R.string.tags_newTag), getString(R.string.tags_enter_tag_name));
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -94,14 +94,14 @@ public class ChecklistEditor extends AppCompatActivity {
                 }
             }
         };
-        popup.setupButtons(getString(R.string.menu_rename), getString(R.string.cancel), dialogClickListener);
+        popup.setupButtons(getString(R.string.create), getString(R.string.cancel), dialogClickListener);
         popup.show();
     }
 
     private JSONArray getTags(){
         JSONArray tags = new JSONArray();
         FlowLayout fl = (FlowLayout) findViewById(R.id.checklistEditor_tags_flowlayout);
-        for(int i = 1; i < fl.getChildCount(); i++){
+        for(int i = 0; i < fl.getChildCount(); i++){
             Tag current = (Tag) fl.getChildAt(i);
             tags.put(current.getName());
         }
@@ -120,20 +120,28 @@ public class ChecklistEditor extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.menu_checklisteditor_save){
-            saveNote();
-        }
-        else if(item.getItemId() == R.id.menu_checklisteditor_toggleTags){
-            ScrollView tagEditor = findViewById(R.id.scrollView_checklisteditor_tags);
-            if(tagEditor.getVisibility() == View.VISIBLE){
-                tagEditor.setVisibility(View.GONE);
+        ScrollView tagEditor = findViewById(R.id.scrollView_checklisteditor_tags);
+        switch (item.getItemId()) {
+            case R.id.menu_checklisteditor_save:
+                saveNote();
+                break;
+            case R.id.menu_checklisteditor_toggleTags:
+                if (tagEditor.getVisibility() == View.VISIBLE) {
+                    tagEditor.setVisibility(View.GONE);
+                } else {
+                    tagEditor.setVisibility(View.VISIBLE);
+                }
+                break;
+            case R.id.menu_checklistEditor_addTag:
+                if (tagEditor.getVisibility() == View.GONE) {
+                    tagEditor.setVisibility(View.VISIBLE);
+                }
+                addTag();
+                break;
             }
-            else{
-                tagEditor.setVisibility(View.VISIBLE);
-            }
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -142,6 +150,15 @@ public class ChecklistEditor extends AppCompatActivity {
             LinearLayout parent = (LinearLayout) findViewById(R.id.noteList);
             ChecklistEntry note = new ChecklistEntry(this, noteInput.getText().toString(), false, parent);
             parent.addView(note);
+
+            //Scroll to bottom
+            final ScrollView scrollview = ((ScrollView) findViewById(R.id.checklist_scrollView));
+            View lastChild = scrollview.getChildAt(scrollview.getChildCount() - 1);
+            int bottom = lastChild.getBottom() + scrollview.getPaddingBottom();
+            int sy = scrollview.getScrollY();
+            int sh = scrollview.getHeight();
+            int delta = bottom - (sy + sh);
+            scrollview.smoothScrollBy(0, delta);
 
             noteInput.setText("");
         }

@@ -9,8 +9,9 @@
     <ScrollView
         android:id="@+id/scrollView_checklisteditor_tags"
         android:layout_width="0dp"
-        android:layout_height="160dp"
-        android:visibility="visible"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,19 +24,12 @@
             <com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout
                 android:id="@+id/checklistEditor_tags_flowlayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="addTag"
-                    android:text="Add Tag" />
-            </com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout>
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 
     <ScrollView
+        android:id="@+id/checklist_scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -70,7 +64,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/checklist_enter_text"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:autofillHints="" />
 
         <Button
             android:id="@+id/button4"
