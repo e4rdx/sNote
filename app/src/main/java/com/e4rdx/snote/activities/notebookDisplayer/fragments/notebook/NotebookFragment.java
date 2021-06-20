@@ -1,5 +1,6 @@
 package com.e4rdx.snote.activities.notebookDisplayer.fragments.notebook;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import androidx.fragment.app.Fragment;
 
 import com.e4rdx.snote.activities.notebookDisplayer.Note;
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
+import com.e4rdx.snote.utils.ConfigManager;
+import com.e4rdx.snote.utils.ExternalNotebookManager;
 import com.e4rdx.snote.utils.SNoteManager;
 import com.e4rdx.snote.R;
 
@@ -62,7 +65,13 @@ public class NotebookFragment extends Fragment {
             jsonObj = new JSONObject();
         }
 
-        new SNoteManager().saveCurrent(jsonObj.toString(), getActivity().getApplicationContext());
+        if(new ConfigManager(getActivity().getApplicationContext()).isExternalOpen()){
+            ExternalNotebookManager.saveExternalNotebook(getActivity().getApplicationContext(), jsonObj.toString(),
+                    Uri.parse(new ConfigManager(getActivity().getApplicationContext()).getExternalPath()));
+        }
+        else {
+            new SNoteManager().saveCurrent(jsonObj.toString(), getActivity().getApplicationContext());
+        }
 
         super.onStop();
     }

@@ -155,7 +155,7 @@ public class SNoteManager {
         return true;
     }
 
-    public String getFileName(Uri uri, Context context) {
+    public static String getFileName(Uri uri, Context context) {
         String result = null;
         if (uri.getScheme().equals("content")) {
             Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);

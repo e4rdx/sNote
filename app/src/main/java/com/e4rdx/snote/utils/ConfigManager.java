@@ -12,7 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class ConfigManager {
-    private Context context;
+    private final Context context;
     private final String configFilePath;
 
     public ConfigManager(Context pContext){
@@ -29,6 +29,50 @@ public class ConfigManager {
             updateConfig(jsonConfig.toString());
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setExternalPath(String path){
+        String jsonString = readFile(configFilePath);
+        try {
+            JSONObject jsonConfig = new JSONObject(jsonString);
+            jsonConfig.put("externalFilePath", path);
+            updateConfig(jsonConfig.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getExternalPath(){
+        String jsonString = readFile(configFilePath);
+        try {
+            JSONObject jsonConfig = new JSONObject(jsonString);
+            return jsonConfig.getString("externalFilePath");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public void setExternalOpen(boolean open){
+        String jsonString = readFile(configFilePath);
+        try {
+            JSONObject jsonConfig = new JSONObject(jsonString);
+            jsonConfig.put("externalFileOpen", open);
+            updateConfig(jsonConfig.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isExternalOpen(){
+        String jsonString = readFile(configFilePath);
+        try {
+            JSONObject jsonConfig = new JSONObject(jsonString);
+            return jsonConfig.getBoolean("externalFileOpen");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

@@ -33,6 +33,13 @@
             android:text="@string/new_notebook"
             android:textAlignment="viewStart" />
 
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="openExternal"
+            android:text="@string/start_menu_openExternal" />
+
     </LinearLayout>
 
     <ScrollView

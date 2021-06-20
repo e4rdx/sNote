@@ -65,7 +65,6 @@ public class NotebookDisplayer extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        //new SNoteManager().saveCurrent("", getApplicationContext());
         super.onStop();
     }
 
@@ -81,6 +80,7 @@ public class NotebookDisplayer extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.action_closeNotebook:
                 new ConfigManager(getApplicationContext()).closeFile();
+                new ConfigManager(getApplicationContext()).setExternalOpen(false);
                 i = new Intent(getApplicationContext(), StartMenuActivity.class);
                 startActivity(i);
                 break;

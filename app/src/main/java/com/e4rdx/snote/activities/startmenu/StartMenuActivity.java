@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.e4rdx.snote.activities.createNotebook.NotebookCreator;
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
 import com.e4rdx.snote.popups.TextInputPopup;
+import com.e4rdx.snote.utils.ExternalNotebookManager;
 import com.e4rdx.snote.utils.SNoteManager;
 import com.e4rdx.snote.R;
 import com.e4rdx.snote.popups.YesNoPopup;
@@ -43,6 +44,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -50,6 +52,7 @@ public class StartMenuActivity extends AppCompatActivity {
     private SNoteFile currentContextItem;
     private static final int CREATE_FILE = 1;
     private static final int PICK_FILE = 2;
+    private static final int SELECT_NOTEBOOK = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +137,19 @@ public class StartMenuActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openExternal(View v){
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+
+        startActivityForResult(intent, SELECT_NOTEBOOK);
+    }
+
+    private void addExternalNotebook(Uri uri){
+
+        ExternalNotebookManager.addExternalNotebook(getApplicationContext(), uri);
     }
 
     private void openFileDialog() {
@@ -291,6 +307,16 @@ public class StartMenuActivity extends AppCompatActivity {
                     loadFiles();
                 }
             }
+            else if(requestCode == SELECT_NOTEBOOK){
+                if (data != null) {
+                    currentUri = data.getData();
+                    //importNoteFile(currentUri);
+                    final int takeFlags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    getContentResolver().takePersistableUriPermission(currentUri, takeFlags);
+                    addExternalNotebook(currentUri);
+                    loadFiles();
+                }
+            }
         }
     }
 
@@ -334,6 +360,14 @@ public class StartMenuActivity extends AppCompatActivity {
                     registerForContextMenu(s.myButton);
                     fileList.addView(s);
                 }
+            }
+        }
+
+        LinkedList<Uri> externals = ExternalNotebookManager.getExternalNotebooks(getApplicationContext());
+        if(externals.size() > 0){
+            for(int i = 0; i < externals.size(); i++){
+                ExternalFile s = new ExternalFile(this, externals.get(i));
+                fileList.addView(s);
             }
         }
     }
