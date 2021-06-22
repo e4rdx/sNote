@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -151,20 +153,31 @@ public class ChecklistEditor extends AppCompatActivity {
             ChecklistEntry note = new ChecklistEntry(this, noteInput.getText().toString(), false, parent);
             parent.addView(note);
 
-            //Scroll to bottom
-            final ScrollView scrollview = ((ScrollView) findViewById(R.id.checklist_scrollView));
-            View lastChild = scrollview.getChildAt(scrollview.getChildCount() - 1);
-            int bottom = lastChild.getBottom() + scrollview.getPaddingBottom();
-            int sy = scrollview.getScrollY();
-            int sh = scrollview.getHeight();
-            int delta = bottom - (sy + sh);
-            scrollview.smoothScrollBy(0, delta);
+            //Scroll after short delay to bottom
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    scrollToBottom();
+                }
+            }, 100);
 
             noteInput.setText("");
         }
         else{
             Toast.makeText(getApplicationContext(), getString(R.string.checklist_enter_text), Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void scrollToBottom(){
+        //Scroll to bottom
+        final ScrollView scrollview = ((ScrollView) findViewById(R.id.checklist_scrollView));
+        View lastChild = scrollview.getChildAt(scrollview.getChildCount() - 1);
+        int bottom = lastChild.getBottom() + scrollview.getPaddingBottom();
+        int sy = scrollview.getScrollY();
+        int sh = scrollview.getHeight();
+        int delta = bottom - (sy + sh);
+        scrollview.smoothScrollBy(0, delta);
     }
 
     private void saveNote(){

@@ -67,7 +67,7 @@ public class NotebookFragment extends Fragment {
 
         if(new ConfigManager(getActivity().getApplicationContext()).isExternalOpen()){
             ExternalNotebookManager.saveExternalNotebook(getActivity().getApplicationContext(), jsonObj.toString(),
-                    Uri.parse(new ConfigManager(getActivity().getApplicationContext()).getExternalPath()));
+                    Uri.parse(new ConfigManager(getActivity().getApplicationContext()).getExternalUri()));
         }
         else {
             new SNoteManager().saveCurrent(jsonObj.toString(), getActivity().getApplicationContext());

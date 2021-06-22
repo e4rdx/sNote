@@ -28,6 +28,27 @@ class ExternalNotebookManager {
         }
 
         @JvmStatic
+        fun loadExternalNotebook(context: Context, uri: Uri) {
+            val noteFile = File(context.filesDir.toString() + "/actualFile/noteFile")
+            val f = File(context.filesDir.toString() + "/actualFile/attachments/")
+            if (f.exists()) {
+                f.delete()
+                val files = f.listFiles()
+                if (files != null) {
+                    for (i in files.indices) {
+                        files[i].delete()
+                    }
+                }
+                f.mkdir()
+            } else {
+                f.mkdir()
+            }
+            ExternalNotebookManager.unpackZip(context, uri, context.filesDir.toString() + "/actualFile/")
+            //SNoteManager().unpackZip(filepath, fileName, context.filesDir.toString() + "/actualFile/")
+            SNoteManager().unpackZip(context.filesDir.toString() + "/actualFile/", "attachments.zip", context.filesDir.toString() + "/actualFile/attachments/")
+        }
+
+        @JvmStatic
         fun addExternalNotebook(context: Context, uri: Uri){
             val path = context.filesDir.toString() + "external.json"
             checkFile(path)

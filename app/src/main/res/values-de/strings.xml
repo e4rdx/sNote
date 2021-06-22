@@ -66,4 +66,6 @@
     <string name="start_menu_openExternal">Externes Notizbuch öffnen</string>
     <string name="undo">Rückgängig</string>
     <string name="checklist_removed_entry">Eintrag wurde entfernt</string>
+    <string name="help_checklist_heading">Checklisten</string>
+    <string name="help_checklist">Hilfe zur Nutzung</string>
 </resources>

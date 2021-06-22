@@ -69,4 +69,6 @@
     <string name="start_menu_openExternal">Open external notebook</string>
     <string name="undo">Undo</string>
     <string name="checklist_removed_entry">Removed entry</string>
+    <string name="help_checklist_heading">Checklists</string>
+    <string name="help_checklist">Usage instructions</string>
 </resources>

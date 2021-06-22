@@ -32,7 +32,7 @@ public class ConfigManager {
         }
     }
 
-    public void setExternalPath(String path){
+    public void setExternalUri(String path){
         String jsonString = readFile(configFilePath);
         try {
             JSONObject jsonConfig = new JSONObject(jsonString);
@@ -43,7 +43,7 @@ public class ConfigManager {
         }
     }
 
-    public String getExternalPath(){
+    public String getExternalUri(){
         String jsonString = readFile(configFilePath);
         try {
             JSONObject jsonConfig = new JSONObject(jsonString);
@@ -87,17 +87,6 @@ public class ConfigManager {
         }
     }
 
-    public boolean isFileOpen(){
-        String jsonString = readFile(configFilePath);
-        try {
-            JSONObject jsonConfig = new JSONObject(jsonString);
-            return jsonConfig.getBoolean("fileOpened");
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     public void closeFile(){
         String jsonString = readFile(configFilePath);
         try {
@@ -137,7 +126,18 @@ public class ConfigManager {
         }
     }
 
-    public void checkConfigFile(){
+    /*public boolean isFileOpen(){
+        String jsonString = readFile(configFilePath);
+        try {
+            JSONObject jsonConfig = new JSONObject(jsonString);
+            return jsonConfig.getBoolean("fileOpened");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }*/
+
+    /*public void checkConfigFile(){
         File configFile = new File(context.getFilesDir() + "config.json");
         JSONObject jsonConfig = new JSONObject();
         try {
@@ -156,5 +156,5 @@ public class ConfigManager {
                 System.out.println(e);
             }
         }
-    }
+    }*/
 }

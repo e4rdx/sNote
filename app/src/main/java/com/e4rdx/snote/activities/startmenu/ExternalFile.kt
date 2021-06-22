@@ -8,7 +8,6 @@ import android.view.Gravity
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.LinearLayout
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer
 import com.e4rdx.snote.utils.ConfigManager
@@ -39,16 +38,16 @@ class ExternalFile(context: Context, uri: Uri) : LinearLayout(context) {
         }
 
         myButton = Button(context)
-        myButton!!.setLayoutParams(LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 3.0f))
+        myButton!!.layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 3.0f)
         myButton!!.setBackgroundColor(0x000000)
-        myButton!!.setTransformationMethod(null)
-        myButton!!.setText(displayName)
-        myButton!!.setTextSize(20f)
-        myButton!!.setGravity(Gravity.LEFT)
+        myButton!!.transformationMethod = null
+        myButton!!.text = "Ext:" + displayName
+        myButton!!.textSize = 20f
+        myButton!!.gravity = Gravity.LEFT
         myButton!!.setOnClickListener(OnClickListener {
             ConfigManager(context).setFileOpen(filepath + fileName)
-            ConfigManager(context).isExternalOpen = true
-            ConfigManager(context).setExternalPath(uri.toString())
+            ConfigManager(context).setExternalOpen(true)
+            ConfigManager(context).setExternalUri(uri.toString())
             overwriteCurrentNotebook(context, uri)
             val i = Intent(context, NotebookDisplayer::class.java)
             context.startActivity(i)

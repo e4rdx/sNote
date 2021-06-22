@@ -5,4 +5,10 @@
         android:defaultValue="false"
         android:key="check_box_preference_1"
         android:title="Example Preference" />
+    <CheckBoxPreference
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:defaultValue="false"
+        android:key="preference_externalNotebooks"
+        android:title="Experimental: External Notebooks" />
 </PreferenceScreen>

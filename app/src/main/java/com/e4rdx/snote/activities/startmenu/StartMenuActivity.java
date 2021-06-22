@@ -3,11 +3,13 @@ package com.e4rdx.snote.activities.startmenu;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.graphics.drawable.Icon;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 import com.e4rdx.snote.activities.createNotebook.NotebookCreator;
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
 import com.e4rdx.snote.popups.TextInputPopup;
+import com.e4rdx.snote.utils.ConfigManager;
 import com.e4rdx.snote.utils.ExternalNotebookManager;
 import com.e4rdx.snote.utils.SNoteManager;
 import com.e4rdx.snote.R;
@@ -66,6 +69,10 @@ public class StartMenuActivity extends AppCompatActivity {
         try {
             JSONObject jsonConfig = new JSONObject(readFile(getApplicationContext().getFilesDir() + "config.json"));
             if(jsonConfig.getBoolean("fileOpened")){
+                if(new ConfigManager(getApplicationContext()).isExternalOpen()){
+                    ExternalNotebookManager.loadExternalNotebook(getApplicationContext(),
+                            Uri.parse(new ConfigManager(getApplicationContext()).getExternalUri()));
+                }
                 Intent i = new Intent(getApplicationContext(), NotebookDisplayer.class);
                 startActivity(i);
             }
@@ -88,6 +95,12 @@ public class StartMenuActivity extends AppCompatActivity {
         loadFiles();
 
         shouldOpenShortcut(getIntent());
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean displayExternal = sharedPreferences.getBoolean("preference_externalNotebooks", false);
+        if(!displayExternal){
+            findViewById(R.id.button_openExternalNotebook).setVisibility(View.GONE);
+        }
     }
 
     private void shouldOpenShortcut(Intent i){
@@ -363,11 +376,16 @@ public class StartMenuActivity extends AppCompatActivity {
             }
         }
 
-        LinkedList<Uri> externals = ExternalNotebookManager.getExternalNotebooks(getApplicationContext());
-        if(externals.size() > 0){
-            for(int i = 0; i < externals.size(); i++){
-                ExternalFile s = new ExternalFile(this, externals.get(i));
-                fileList.addView(s);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean displayExternal = sharedPreferences.getBoolean("preference_externalNotebooks", false);
+
+        if(displayExternal) {
+            LinkedList<Uri> externals = ExternalNotebookManager.getExternalNotebooks(getApplicationContext());
+            if (externals.size() > 0) {
+                for (int i = 0; i < externals.size(); i++) {
+                    ExternalFile s = new ExternalFile(this, externals.get(i));
+                    fileList.addView(s);
+                }
             }
         }
     }
