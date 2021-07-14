@@ -1,5 +1,3 @@
-@file:Suppress("PackageName")
-
 package com.e4rdx.snote.activities.notebookDisplayer
 
 import android.annotation.SuppressLint
@@ -16,8 +14,9 @@ import com.e4rdx.snote.activities.checklistEditor.ChecklistEditor
 import com.e4rdx.snote.activities.texteditor.TextEditor
 import com.e4rdx.snote.activities.link.Link
 import com.e4rdx.snote.R
-import com.e4rdx.snote.popups.TextInputPopup
-import com.e4rdx.snote.popups.YesNoPopup
+import com.e4rdx.snote.dialogs.TextInputDialog
+import com.e4rdx.snote.dialogs.YesNoDialog
+import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
 
@@ -110,10 +109,12 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
             if(dropdown!!.visibility == VISIBLE) {
                 dropdown!!.visibility = GONE
                 btn_dropdown.setImageResource(R.drawable.ic_dropdown)
+                setDropdownOpen(false)
             }
             else{
                 dropdown!!.visibility = VISIBLE
                 btn_dropdown.setImageResource(R.drawable.ic_dropup)
+                setDropdownOpen(true)
             }
         }
         params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
@@ -132,15 +133,36 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
 
         //configureIntent(noteType)
         createDropdown(noteType)
+
+        if(isDropdownOpen()){
+            btn_dropdown.callOnClick()
+        }
+    }
+
+    private fun setDropdownOpen(open: Boolean){
+        val json = JSONObject(jsonData.toString())
+        json.put("dropdownOpen", open)
+        jsonData = json.toString()
+    }
+
+    private fun isDropdownOpen() : Boolean{
+        val json = JSONObject(jsonData.toString())
+        return try{
+            json.getBoolean("dropdownOpen")
+        }
+        catch (e: JSONException){
+            e.printStackTrace()
+            false
+        }
     }
 
     fun rename(context: Context){
-        val popup = TextInputPopup(context, context.getString(R.string.note_rename), context.getString(R.string.note_enter_new_name))
+        val popup = TextInputDialog(context, context.getString(R.string.note_rename), context.getString(R.string.note_enter_new_name))
         val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
             when (which) {
                 DialogInterface.BUTTON_POSITIVE -> {
                     val newName = popup.getText()
-                    btn_open!!.setText(newName)
+                    btn_open!!.text = newName
                     val json = JSONObject(jsonData.toString())
                     json.put("name", newName)
                     jsonData = json.toString()
@@ -247,6 +269,6 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
                 }
             }
         }
-        YesNoPopup(context, context.getString(R.string.note_are_you_sure), context.getString(R.string.note_cannot_be_undone), dialogClickListener)
+        YesNoDialog(context, context.getString(R.string.note_are_you_sure), context.getString(R.string.note_cannot_be_undone), dialogClickListener)
     }
 }

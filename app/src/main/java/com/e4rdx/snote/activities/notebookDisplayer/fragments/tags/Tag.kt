@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.e4rdx.snote.R
-import com.e4rdx.snote.popups.YesNoPopup
+import com.e4rdx.snote.dialogs.YesNoDialog
 
 @SuppressLint("ViewConstructor")
 class Tag(context: Context, name: String, ref: TagFragment): LinearLayout(context) {
@@ -72,7 +72,7 @@ class Tag(context: Context, name: String, ref: TagFragment): LinearLayout(contex
                 }
             }
         }
-        YesNoPopup(context, context.getString(R.string.tags_are_you_sure),
+        YesNoDialog(context, context.getString(R.string.tags_are_you_sure),
                 context.getString(R.string.tags_really_remove), dialogClickListener)
     }
 }

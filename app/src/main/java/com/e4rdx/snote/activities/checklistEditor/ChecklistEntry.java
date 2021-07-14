@@ -5,31 +5,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.text.Editable;
 import android.text.InputType;
-import android.text.Selection;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.e4rdx.snote.R;
-import com.e4rdx.snote.popups.TextInputPopup;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 @SuppressLint("ViewConstructor")
 public class ChecklistEntry extends LinearLayout {

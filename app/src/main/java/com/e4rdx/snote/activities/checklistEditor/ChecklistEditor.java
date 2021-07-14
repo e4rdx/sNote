@@ -1,6 +1,7 @@
 package com.e4rdx.snote.activities.checklistEditor;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -21,11 +22,14 @@ import android.widget.Toast;
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
 import com.e4rdx.snote.R;
 import com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout;
-import com.e4rdx.snote.popups.TextInputPopup;
+import com.e4rdx.snote.dialogs.SelectTagDialog;
+import com.e4rdx.snote.dialogs.TextInputDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.LinkedList;
 
 public class ChecklistEditor extends AppCompatActivity {
     private EditText noteInput;
@@ -85,7 +89,7 @@ public class ChecklistEditor extends AppCompatActivity {
     }
 
     public void addTag(){
-        TextInputPopup popup = new TextInputPopup(ChecklistEditor.this, getString(R.string.tags_newTag), getString(R.string.tags_enter_tag_name));
+        /*TextInputDialog popup = new TextInputDialog(ChecklistEditor.this, getString(R.string.tags_newTag), getString(R.string.tags_enter_tag_name));
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -97,7 +101,26 @@ public class ChecklistEditor extends AppCompatActivity {
             }
         };
         popup.setupButtons(getString(R.string.create), getString(R.string.cancel), dialogClickListener);
-        popup.show();
+        popup.show();*/
+
+        String[] tags = {"t1", "t2", "t3", "t4", "t5"};
+        //boolean[] checkedItems = {true, false, false, true, false}
+        SelectTagDialog dialog = new SelectTagDialog(ChecklistEditor.this, "Add tag", tags);
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int state) {
+                if(state == DialogInterface.BUTTON_POSITIVE){
+                    LinkedList<String> choices = dialog.getChoices();
+                    for(int i = 0; i < choices.size(); i++){
+                        Tag tag = new Tag(ChecklistEditor.this, choices.get(i));
+                        FlowLayout fl = (FlowLayout) findViewById(R.id.checklistEditor_tags_flowlayout);
+                        fl.addView(tag);
+                    }
+                }
+            }
+        };
+        dialog.setupButtons(getString(R.string.create), getString(R.string.cancel), dialogClickListener);
+        dialog.create().show();
     }
 
     private JSONArray getTags(){

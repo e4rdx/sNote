@@ -3,15 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_checklisteditor_toggleTags"
-        android:icon="@drawable/ic_tag"
-        android:title="Item"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/menu_checklistEditor_addTag"
-        android:icon="@drawable/ic_add"
-        android:title="Title"
-        app:showAsAction="always" />
+        android:id="@+id/menu_checklist_tag"
+        android:title="Tags" >
+        <menu >
+            <item
+                android:id="@+id/menu_checklisteditor_toggleTags"
+                android:icon="@drawable/ic_tag"
+                android:title="Show/Hide Tags"
+                app:showAsAction="always" />
+            <item
+                android:id="@+id/menu_checklistEditor_addTag"
+                android:icon="@drawable/ic_add"
+                android:title="Add Tag"
+                app:showAsAction="always" />
+        </menu>
+    </item>
     <item
         android:id="@+id/menu_checklisteditor_save"
         android:icon="@drawable/ic_save"

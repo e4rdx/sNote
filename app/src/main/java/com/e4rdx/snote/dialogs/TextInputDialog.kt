@@ -1,4 +1,4 @@
-package com.e4rdx.snote.popups
+package com.e4rdx.snote.dialogs
 
 import android.app.AlertDialog
 import android.content.Context
@@ -9,7 +9,7 @@ import android.text.SpannableStringBuilder
 import android.widget.EditText
 
 
-class TextInputPopup(context: Context, title: String, message: String) : AlertDialog.Builder(context) {
+class TextInputDialog(context: Context, title: String, message: String) : AlertDialog.Builder(context) {
     private var input: EditText? = null
 
     init {

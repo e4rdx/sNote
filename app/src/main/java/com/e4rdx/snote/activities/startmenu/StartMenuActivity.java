@@ -26,12 +26,12 @@ import android.widget.Toast;
 
 import com.e4rdx.snote.activities.createNotebook.NotebookCreator;
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
-import com.e4rdx.snote.popups.TextInputPopup;
+import com.e4rdx.snote.dialogs.TextInputDialog;
 import com.e4rdx.snote.utils.ConfigManager;
 import com.e4rdx.snote.utils.ExternalNotebookManager;
 import com.e4rdx.snote.utils.SNoteManager;
 import com.e4rdx.snote.R;
-import com.e4rdx.snote.popups.YesNoPopup;
+import com.e4rdx.snote.dialogs.YesNoDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -121,7 +121,7 @@ public class StartMenuActivity extends AppCompatActivity {
     }
 
     private void renameDialog(){
-        TextInputPopup popup = new TextInputPopup(StartMenuActivity.this, getString(R.string.menu_rename), getString(R.string.notebook_rename));
+        TextInputDialog popup = new TextInputDialog(StartMenuActivity.this, getString(R.string.menu_rename), getString(R.string.notebook_rename));
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -189,7 +189,7 @@ public class StartMenuActivity extends AppCompatActivity {
                 }
             }
         };
-        new YesNoPopup(StartMenuActivity.this, getString(R.string.notebook_are_you_sure),
+        new YesNoDialog(StartMenuActivity.this, getString(R.string.notebook_are_you_sure),
                 getString(R.string.notebook_deleting_not_undone), dialogClickListener);
     }
 

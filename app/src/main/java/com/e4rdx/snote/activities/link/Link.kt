@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer
 import com.e4rdx.snote.R
-import com.e4rdx.snote.popups.TextInputPopup
+import com.e4rdx.snote.dialogs.TextInputDialog
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -86,7 +86,7 @@ class Link : AppCompatActivity() {
     }
 
     private fun changeLink(){
-        val popup = TextInputPopup(this@Link, getString(R.string.edit_link), getString(R.string.edit_link_description))
+        val popup = TextInputDialog(this@Link, getString(R.string.edit_link), getString(R.string.edit_link_description))
         this.link.let { popup.setText(it) }
         val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
             when (which) {
