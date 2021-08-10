@@ -58,6 +58,38 @@ class ExternalNotebookManager {
         }
 
         @JvmStatic
+        fun removeExternalNotebook(context: Context, uri: Uri){
+            val path = context.filesDir.toString() + "external.json"
+            checkFile(path)
+            val json = JSONArray(readFile(path))
+            val newJson = JSONArray()
+            json.put(uri.toString())
+            for (i in 0 until json.length()){
+                if(!(json.getString(i) == uri.toString())){
+                    newJson.put(json.getString(i))
+                }
+            }
+            updateExternal(path, newJson.toString())
+        }
+
+        @JvmStatic
+        fun hasAccessToUri(context: Context, uri: Uri) : Boolean{
+            val cR = context.getContentResolver()
+
+            try {
+                val inputStream = cR.openInputStream(uri)
+                if (inputStream != null) {
+                    inputStream.close()
+                    return true
+                }
+            }
+            catch (e: java.lang.Exception) {
+                //file not exists
+            }
+            return false
+        }
+
+        @JvmStatic
         fun checkFile(path: String){
             val f = File(path)
             if (!f.exists()){
@@ -96,17 +128,6 @@ class ExternalNotebookManager {
             }
             return text.toString()
         }
-
-        /*@JvmStatic
-        fun readURI(context: Context, uri: Uri){
-            try {
-                val inStream: InputStream? = context.contentResolver.openInputStream(uri)
-                val r = BufferedReader(InputStreamReader(inStream))
-                val z = ZipInputStream(inStream)
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-            }
-        }*/
 
         @JvmStatic
         fun saveExternalNotebook(context: Context, jsonData: String, uri: Uri){

@@ -68,4 +68,7 @@
     <string name="checklist_removed_entry">Eintrag wurde entfernt</string>
     <string name="help_checklist_heading">Checklisten</string>
     <string name="help_checklist">Hilfe zur Nutzung</string>
+    <string name="add">Hinzufügen</string>
+    <string name="tags_menu_info">Zeige/Verstecke Tags</string>
+    <string name="attachments_export_success">Datei erfolgreich exportiert</string>
 </resources>

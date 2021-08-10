@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
@@ -24,6 +25,7 @@ import com.e4rdx.snote.R;
 import com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout;
 import com.e4rdx.snote.dialogs.SelectTagDialog;
 import com.e4rdx.snote.dialogs.TextInputDialog;
+import com.e4rdx.snote.utils.SNoteManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -89,23 +91,16 @@ public class ChecklistEditor extends AppCompatActivity {
     }
 
     public void addTag(){
-        /*TextInputDialog popup = new TextInputDialog(ChecklistEditor.this, getString(R.string.tags_newTag), getString(R.string.tags_enter_tag_name));
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(i == DialogInterface.BUTTON_POSITIVE){
-                    Tag tag = new Tag(ChecklistEditor.this, popup.getText());
-                    FlowLayout fl = (FlowLayout) findViewById(R.id.checklistEditor_tags_flowlayout);
-                    fl.addView(tag);
-                }
+        JSONArray jsonTags = SNoteManager.getAllTags(getApplicationContext());
+        String[] tags = new String[jsonTags.length()];
+        for(int i = 0; i < jsonTags.length(); i++){
+            try {
+                tags[i] = jsonTags.getString(i);
+            } catch (JSONException e){
+                e.printStackTrace();
             }
-        };
-        popup.setupButtons(getString(R.string.create), getString(R.string.cancel), dialogClickListener);
-        popup.show();*/
-
-        String[] tags = {"t1", "t2", "t3", "t4", "t5"};
-        //boolean[] checkedItems = {true, false, false, true, false}
-        SelectTagDialog dialog = new SelectTagDialog(ChecklistEditor.this, "Add tag", tags);
+        }
+        SelectTagDialog dialog = new SelectTagDialog(ChecklistEditor.this, getString(R.string.AddTag), tags);
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int state) {
@@ -119,18 +114,28 @@ public class ChecklistEditor extends AppCompatActivity {
                 }
             }
         };
-        dialog.setupButtons(getString(R.string.create), getString(R.string.cancel), dialogClickListener);
+        dialog.setupButtons(getString(R.string.add), getString(R.string.cancel), dialogClickListener);
         dialog.create().show();
     }
 
     private JSONArray getTags(){
         JSONArray tags = new JSONArray();
         FlowLayout fl = (FlowLayout) findViewById(R.id.checklistEditor_tags_flowlayout);
-        for(int i = 0; i < fl.getChildCount(); i++){
-            Tag current = (Tag) fl.getChildAt(i);
-            tags.put(current.getName());
+        if(fl.getChildCount() > 2) {
+            for (int i = 1; i < fl.getChildCount(); i++) {
+                try {
+                    Tag current = (Tag) fl.getChildAt(i);
+                    tags.put(current.getName());
+                } catch (ClassCastException e){
+                    e.printStackTrace();
+                }
+            }
         }
         return tags;
+    }
+
+    public void addNewTag(View v){
+        addTag();
     }
 
     @Override
@@ -159,12 +164,6 @@ public class ChecklistEditor extends AppCompatActivity {
                 } else {
                     tagEditor.setVisibility(View.VISIBLE);
                 }
-                break;
-            case R.id.menu_checklistEditor_addTag:
-                if (tagEditor.getVisibility() == View.GONE) {
-                    tagEditor.setVisibility(View.VISIBLE);
-                }
-                addTag();
                 break;
             }
         return super.onOptionsItemSelected(item);
@@ -208,7 +207,9 @@ public class ChecklistEditor extends AppCompatActivity {
         LinearLayout parent = (LinearLayout)findViewById(R.id.noteList);
         for(int i = 0; i < parent.getChildCount(); i++){
             ChecklistEntry current = (ChecklistEntry) parent.getChildAt(i);
-            entrys.put(current.getJsonData());
+            if(current.getVisibility() == View.VISIBLE) {
+                entrys.put(current.getJsonData());
+            }
         }
         try {
             jsonData.put("entrys", entrys);

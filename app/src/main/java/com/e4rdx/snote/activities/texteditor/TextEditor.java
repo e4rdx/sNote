@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -16,16 +17,25 @@ import android.speech.SpeechRecognizer;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.e4rdx.snote.activities.checklistEditor.ChecklistEditor;
+import com.e4rdx.snote.activities.checklistEditor.Tag;
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
 import com.e4rdx.snote.R;
+import com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout;
+import com.e4rdx.snote.dialogs.SelectTagDialog;
+import com.e4rdx.snote.utils.SNoteManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Locale;
 
 public class TextEditor extends AppCompatActivity {
@@ -58,6 +68,12 @@ public class TextEditor extends AppCompatActivity {
                 noteText = recievedJson.getString("text");
                 textInputField.setText(noteText);
                 index = extras.getInt("index");
+                JSONArray tags = recievedJson.getJSONArray("tags");
+                for(int i = 0; i < tags.length(); i++){
+                    Tag tag = new Tag(TextEditor.this, tags.getString(i));
+                    FlowLayout fl = (FlowLayout) findViewById(R.id.textEditor_tags_flowlayout);
+                    fl.addView(tag);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -89,6 +105,7 @@ public class TextEditor extends AppCompatActivity {
         noteText = textInputField.getText().toString();
         try {
             jsonData.put("text", noteText);
+            jsonData.put("tags", getTags());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -195,6 +212,7 @@ public class TextEditor extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        ScrollView textEditor = findViewById(R.id.scrollView_texteditor_tags);
         switch (item.getItemId()){
             case R.id.texteditor_save:
                 saveNote();
@@ -202,7 +220,62 @@ public class TextEditor extends AppCompatActivity {
             case R.id.texteditor_stt:
                 stt();
                 return true;
+            case  R.id.menu_texteditor_toggleTags:
+                if (textEditor.getVisibility() == View.VISIBLE) {
+                    textEditor.setVisibility(View.GONE);
+                } else {
+                    textEditor.setVisibility(View.VISIBLE);
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addTag(){
+        JSONArray jsonTags = SNoteManager.getAllTags(getApplicationContext());
+        String[] tags = new String[jsonTags.length()];
+        for(int i = 0; i < jsonTags.length(); i++){
+            try {
+                tags[i] = jsonTags.getString(i);
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+        SelectTagDialog dialog = new SelectTagDialog(TextEditor.this, getString(R.string.AddTag), tags);
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int state) {
+                if(state == DialogInterface.BUTTON_POSITIVE){
+                    LinkedList<String> choices = dialog.getChoices();
+                    for(int i = 0; i < choices.size(); i++){
+                        Tag tag = new Tag(TextEditor.this, choices.get(i));
+                        FlowLayout fl = (FlowLayout) findViewById(R.id.textEditor_tags_flowlayout);
+                        fl.addView(tag);
+                    }
+                }
+            }
+        };
+        dialog.setupButtons(getString(R.string.add), getString(R.string.cancel), dialogClickListener);
+        dialog.create().show();
+    }
+
+    private JSONArray getTags(){
+        JSONArray tags = new JSONArray();
+        FlowLayout fl = (FlowLayout) findViewById(R.id.textEditor_tags_flowlayout);
+        if(fl.getChildCount() > 2) {
+            for (int i = 1; i < fl.getChildCount(); i++) {
+                try {
+                    Tag current = (Tag) fl.getChildAt(i);
+                    tags.put(current.getName());
+                } catch (ClassCastException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return tags;
+    }
+
+    public void addNewTag(View v){
+        addTag();
     }
 }

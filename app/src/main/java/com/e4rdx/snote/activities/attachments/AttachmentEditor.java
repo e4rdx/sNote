@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,11 +17,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.e4rdx.snote.activities.checklistEditor.ChecklistEditor;
+import com.e4rdx.snote.activities.checklistEditor.Tag;
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
 import com.e4rdx.snote.R;
+import com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout;
+import com.e4rdx.snote.dialogs.SelectTagDialog;
+import com.e4rdx.snote.utils.SNoteManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +39,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 
 public class AttachmentEditor extends AppCompatActivity {
     private ImageView image;
@@ -66,7 +75,12 @@ public class AttachmentEditor extends AppCompatActivity {
                 path = jsonData.getString("src");
                 type = jsonData.getString("type");
                 index = b.getInt("index");
-                System.out.println(index);
+                JSONArray tags = jsonData.getJSONArray("tags");
+                for (int j = 0; j < tags.length(); j++){
+                    FlowLayout fl = (FlowLayout) findViewById(R.id.attachments_tags_flowlayout);
+                    Tag t = new Tag(AttachmentEditor.this, tags.getString(j));
+                    fl.addView(t);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -77,14 +91,10 @@ public class AttachmentEditor extends AppCompatActivity {
             if(imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 image.setImageBitmap(myBitmap);
-                System.out.println("File is here");
             }
             else{
-                System.out.println("File not found");
+                Toast.makeText(getApplicationContext(), "File not found :(", Toast.LENGTH_SHORT).show();
             }
-        }
-        else{
-            System.out.println("Wrong type");
         }
 
         getSupportActionBar().setTitle(name);
@@ -103,6 +113,14 @@ public class AttachmentEditor extends AppCompatActivity {
             case R.id.attachment_saveas:
                 exportFile(name);
                 return true;
+            case R.id.menu_attachments_toggleTags:
+                ScrollView tagEditor = findViewById(R.id.scrollView_attachments_tags);
+                if (tagEditor.getVisibility() == View.VISIBLE) {
+                    tagEditor.setVisibility(View.GONE);
+                } else {
+                    tagEditor.setVisibility(View.VISIBLE);
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -115,7 +133,7 @@ public class AttachmentEditor extends AppCompatActivity {
                 if (data != null) {
                     Uri targetFile = data.getData();
                     writeFileToURI(targetFile);
-                    Toast.makeText(getApplicationContext(), "Datei erfolgreich exportiert!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.attachments_export_success), Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -161,6 +179,7 @@ public class AttachmentEditor extends AppCompatActivity {
     public void back(View v){
         jsonData = new JSONObject();
         try {
+            jsonData.put("tags", getTags());
             jsonData.put("name", name);
             jsonData.put("type", type);
             jsonData.put("src", path);
@@ -181,5 +200,49 @@ public class AttachmentEditor extends AppCompatActivity {
             i.putExtra("edit", edit);
             startActivity(i);
         }
+    }
+
+    public void addTag(View v){
+        JSONArray jsonTags = SNoteManager.getAllTags(getApplicationContext());
+        String[] tags = new String[jsonTags.length()];
+        for(int i = 0; i < jsonTags.length(); i++){
+            try {
+                tags[i] = jsonTags.getString(i);
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+        SelectTagDialog dialog = new SelectTagDialog(AttachmentEditor.this, getString(R.string.AddTag), tags);
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int state) {
+                if(state == DialogInterface.BUTTON_POSITIVE){
+                    LinkedList<String> choices = dialog.getChoices();
+                    for(int i = 0; i < choices.size(); i++){
+                        Tag tag = new Tag(AttachmentEditor.this, choices.get(i));
+                        FlowLayout fl = (FlowLayout) findViewById(R.id.attachments_tags_flowlayout);
+                        fl.addView(tag);
+                    }
+                }
+            }
+        };
+        dialog.setupButtons(getString(R.string.add), getString(R.string.cancel), dialogClickListener);
+        dialog.create().show();
+    }
+
+    private JSONArray getTags(){
+        JSONArray tags = new JSONArray();
+        FlowLayout fl = (FlowLayout) findViewById(R.id.attachments_tags_flowlayout);
+        if(fl.getChildCount() > 2) {
+            for (int i = 1; i < fl.getChildCount(); i++) {
+                try {
+                    Tag current = (Tag) fl.getChildAt(i);
+                    tags.put(current.getName());
+                } catch (ClassCastException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return tags;
     }
 }

@@ -383,8 +383,13 @@ public class StartMenuActivity extends AppCompatActivity {
             LinkedList<Uri> externals = ExternalNotebookManager.getExternalNotebooks(getApplicationContext());
             if (externals.size() > 0) {
                 for (int i = 0; i < externals.size(); i++) {
-                    ExternalFile s = new ExternalFile(this, externals.get(i));
-                    fileList.addView(s);
+                    if(ExternalNotebookManager.hasAccessToUri(getApplicationContext(), externals.get(i))){
+                        ExternalFile s = new ExternalFile(this, externals.get(i));
+                        fileList.addView(s);
+                    }
+                    else{
+                        ExternalNotebookManager.removeExternalNotebook(getApplicationContext(), externals.get(i));
+                    }
                 }
             }
         }

@@ -71,4 +71,8 @@
     <string name="checklist_removed_entry">Removed entry</string>
     <string name="help_checklist_heading">Checklists</string>
     <string name="help_checklist">Usage instructions</string>
+    <string name="AddTag" translatable="false">+Tag</string>
+    <string name="add">Add</string>
+    <string name="tags_menu_info">Show/Hide Tags</string>
+    <string name="attachments_export_success">Export successful</string>
 </resources>

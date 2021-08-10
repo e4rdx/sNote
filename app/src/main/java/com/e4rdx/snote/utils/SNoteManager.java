@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.provider.OpenableColumns;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +38,18 @@ public class SNoteManager {
             e.printStackTrace();
         }
         return jsonObj;
+    }
+
+    public static JSONArray getAllTags(Context context){
+        JSONObject jsonObj = readNoteFile(context);
+        JSONArray tags = new JSONArray();
+        try {
+            tags = jsonObj.getJSONArray("tags");
+        }
+        catch (JSONException e){
+            System.out.println("no tags found");
+        }
+        return tags;
     }
 
     public void checkAttachments(Context context){

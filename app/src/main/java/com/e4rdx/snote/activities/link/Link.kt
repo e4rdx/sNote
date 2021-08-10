@@ -7,13 +7,20 @@ import android.os.Bundle
 import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer
 import com.e4rdx.snote.R
+import com.e4rdx.snote.activities.checklistEditor.Tag
+import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer
+import com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout
+import com.e4rdx.snote.dialogs.SelectTagDialog
 import com.e4rdx.snote.dialogs.TextInputDialog
+import com.e4rdx.snote.utils.SNoteManager
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -39,6 +46,17 @@ class Link : AppCompatActivity() {
             val jsonData = JSONObject(jsonString)
             name = jsonData.getString("name").toString()
             link = jsonData.getString("link").toString()
+            try {
+                val tags: JSONArray = jsonData.getJSONArray("tags")
+                for (i in 0 until tags.length()) {
+                    val fl = findViewById<View>(R.id.link_tags_flowlayout) as FlowLayout
+                    val t = Tag(this@Link, tags.getString(i))
+                    fl.addView(t)
+                }
+            }
+            catch (e: JSONException){
+                e.printStackTrace()
+            }
         }
         else{
             link = getString(R.string.enter_link)
@@ -68,9 +86,35 @@ class Link : AppCompatActivity() {
         textviewLink!!.text = link
     }
 
+    fun addTag(v: View) {
+        val jsonTags = SNoteManager.getAllTags(applicationContext)
+        val tags = Array<String>(jsonTags.length()){""}
+        for (i in 0 until jsonTags.length()) {
+            try {
+                tags[i] = jsonTags.getString(i)
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+        val dialog = SelectTagDialog(this@Link, getString(R.string.AddTag), tags)
+        val dialogClickListener = DialogInterface.OnClickListener { dialogInterface, state ->
+            if (state == DialogInterface.BUTTON_POSITIVE) {
+                val choices = dialog.getChoices()
+                for (i in choices.indices) {
+                    val tag = Tag(this@Link, choices[i])
+                    val fl = findViewById<View>(R.id.link_tags_flowlayout) as FlowLayout
+                    fl.addView(tag)
+                }
+            }
+        }
+        dialog.setupButtons(getString(R.string.add), getString(R.string.cancel), dialogClickListener)
+        dialog.create().show()
+    }
+
     private fun saveAndExit(){
         val jsonData = JSONObject()
         try {
+            jsonData.put("tags", getTags())
             jsonData.put("link", link)
             jsonData.put("type", "link")
             jsonData.put("name", name)
@@ -103,6 +147,22 @@ class Link : AppCompatActivity() {
         popup.show()
     }
 
+    private fun getTags(): JSONArray {
+        val tags = JSONArray()
+        val fl = findViewById<View>(R.id.link_tags_flowlayout) as FlowLayout
+        if (fl.childCount > 2) {
+            for (i in 1 until fl.childCount) {
+                try {
+                    val current = fl.getChildAt(i) as Tag
+                    tags.put(current.name)
+                } catch (e: ClassCastException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+        return tags
+    }
+
     private fun openInBrowser(){
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
     }
@@ -130,6 +190,14 @@ class Link : AppCompatActivity() {
             R.id.menu_link_open -> {
                 openInBrowser()
                 return true
+            }
+            R.id.menu_link_toggleTags -> {
+                val tagEditor = findViewById<ScrollView>(R.id.scrollView_link_tags)
+                if (tagEditor.getVisibility() == View.VISIBLE) {
+                    tagEditor.setVisibility(View.GONE)
+                } else {
+                    tagEditor.setVisibility(View.VISIBLE)
+                }
             }
         }
         return super.onOptionsItemSelected(item)

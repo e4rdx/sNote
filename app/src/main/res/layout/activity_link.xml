@@ -6,12 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".activities.link.Link">
 
+    <ScrollView
+        android:id="@+id/scrollView_link_tags"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout
+                android:id="@+id/link_tags_flowlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_tag"
+                    android:onClick="addTag"
+                    android:text="@string/AddTag"
+                    android:textSize="12sp" />
+            </com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout>
+        </LinearLayout>
+    </ScrollView>
+
     <TextView
         android:id="@+id/textView_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView_link_tags" />
 
     <WebView
         android:id="@+id/webview_link"

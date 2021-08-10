@@ -35,12 +35,12 @@ class Tag(context: Context, name: String): LinearLayout(context) {
         params.leftMargin = 20
         txt.layoutParams = params
         txt.setOnClickListener{
-            if(selectedByUser){
+            /*if(selectedByUser){
                 this.setBackgroundResource(R.drawable.background_tag)
             } else{
                 this.setBackgroundResource(R.drawable.background_tag_selected)
             }
-            selectedByUser = !selectedByUser
+            selectedByUser = !selectedByUser*/
         }
 
 
