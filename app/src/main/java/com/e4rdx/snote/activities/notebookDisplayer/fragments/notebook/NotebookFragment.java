@@ -2,6 +2,8 @@ package com.e4rdx.snote.activities.notebookDisplayer.fragments.notebook;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -9,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -135,8 +138,40 @@ public class NotebookFragment extends Fragment {
             case R.id.notecontext_rename:
                 currentContextItem.rename(getActivity());
                 break;
+            case R.id.notecontext_duplicate:
+                LinearLayout noteList = myRoot.findViewById(R.id.LinearLayoutHomeNoteList);
+                Note noteButton = null;
+                try {
+                    noteButton = new Note(getActivity().getApplicationContext(),
+                            new JSONObject(currentContextItem.getJsonData()), noteList.getChildCount());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                noteList.addView(noteButton);
+                registerForContextMenu(noteButton.getBtn_open());
+
+                //Scroll after short delay to bottom
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        scrollToBottom();
+                    }
+                }, 100);
+                break;
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void scrollToBottom(){
+        //Scroll to bottom
+        final ScrollView scrollview = ((ScrollView) myRoot.findViewById(R.id.scrollview_notelist));
+        View lastChild = scrollview.getChildAt(scrollview.getChildCount() - 1);
+        int bottom = lastChild.getBottom() + scrollview.getPaddingBottom();
+        int sy = scrollview.getScrollY();
+        int sh = scrollview.getHeight();
+        int delta = bottom - (sy + sh);
+        scrollview.smoothScrollBy(0, delta);
     }
 
     @Override

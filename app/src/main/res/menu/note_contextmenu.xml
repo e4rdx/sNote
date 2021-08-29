@@ -5,6 +5,9 @@
         android:id="@+id/notecontext_rename"
         android:title="@string/menu_rename" />
     <item
+        android:id="@+id/notecontext_duplicate"
+        android:title="@string/menu_duplicate" />
+    <item
         android:id="@+id/notecontext_remove"
         android:title="@string/menu_delete" />
 </menu>

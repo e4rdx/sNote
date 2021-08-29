@@ -70,9 +70,24 @@
     <string name="undo">Undo</string>
     <string name="checklist_removed_entry">Removed entry</string>
     <string name="help_checklist_heading">Checklists</string>
-    <string name="help_checklist">Usage instructions</string>
+    <string name="help_checklist">-Edit an entry by clicking on it\n-Remove an entry by swiping from left to right on it\n-Links have to start with http or https\n-Only one link per entry is possible\n-Long click on an entry with link to open it in your default browser\n-The link is only opened if the entry is not edited</string>
     <string name="AddTag" translatable="false">+Tag</string>
     <string name="add">Add</string>
     <string name="tags_menu_info">Show/Hide Tags</string>
     <string name="attachments_export_success">Export successful</string>
+    <string name="help_text">-Click on the microphone to insert the text you speak at the cursor position\n-To use this function, you need to allow the app to access the microphone!</string>
+    <string name="help_text_heading">Text</string>
+    <string name="help_tags_heading">Tags</string>
+    <string name="help_tags">-Create a new tag with the \"+\" in the tag menu\n-Select one ore more tags in the tag menu, to show all notes with the selected tags\n-Every note got a tag symbol in its menu. Clicking on it will show/hide the tags\n-To assign a tag to a note click on the \"+Tag\"(Is hidden by default with the tags of the note)</string>
+    <string name="help_links">-Edit the link, which is displayed above the WebView, by clicking on the pencil\n-Open the link in your browser by clicking on the symbol next to the pencil</string>
+    <string name="help_links_heading">Links</string>
+    <string name="help_attachments_heading">Attachments</string>
+    <string name="help_attachments">-Save the attachments to your files by clicking on the download symbol</string>
+    <string name="help_notes_heading">Notes</string>
+    <string name="help_notes">-Create a new note with the \"+\" button\n-Long click on a note to open up a context menu</string>
+    <string name="help_notebooks_heading">Notebooks</string>
+    <string name="help_notebooks">-Close the current notebook in the 3 point menu at the top right\n-Long click on a notebook in the notebook menu to open up a context menu</string>
+    <string name="help_extNotebooks_heading">External Notebooks</string>
+    <string name="help_extNotebooks">-Moving, renaming or deleting the file removes the notebook from the notebook list</string>
+    <string name="menu_duplicate">Duplicate</string>
 </resources>

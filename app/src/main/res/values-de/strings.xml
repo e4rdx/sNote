@@ -67,8 +67,23 @@
     <string name="undo">Rückgängig</string>
     <string name="checklist_removed_entry">Eintrag wurde entfernt</string>
     <string name="help_checklist_heading">Checklisten</string>
-    <string name="help_checklist">Hilfe zur Nutzung</string>
+    <string name="help_checklist">-Ändere Eintrag durch anklickem\n-Entferne Eintrag durch wischen von links nach rechts\n-Links müssen mit http oder https starten\n-Es ist nur ein Link pro Eintrag möglich\n-Langes klicken auf einen Eintrag mit Link öffnet diesen im Browser\n-Der Link wird nur geöffnet, wenn der Eintrag nicht bearbeitet wird</string>
     <string name="add">Hinzufügen</string>
     <string name="tags_menu_info">Zeige/Verstecke Tags</string>
     <string name="attachments_export_success">Datei erfolgreich exportiert</string>
+    <string name="help_text">-Füge über das Mikrofon den gesprochenen Text an der Position des Cursors ein\n-Für die Nutzung dieser Funktion wird Zugriff auf das Mikrofon benötigt!</string>
+    <string name="help_text_heading">Text</string>
+    <string name="help_links_heading">Links</string>
+    <string name="help_tags">-Erstelle neue Tags mit dem \"+\" im Tag-Menü\n-Wähle ein oder mehrere Tags im Tag-Menü aus, um alle Notizen mit den gewählten Tags anzeigen zu lassen\n-Jede Notiz hat ein Tagsymbol oben im Menü. Durch dieses lasssen sich die zugewiesenen Tags anzeigen/verstecken\n-Um einer Notiz ein Tag zuzuweisen, klicke bei den Tags einer Notiz auf \"+Tag\"(Wird standartmäßig mit den Tags nicht angezeigt)</string>
+    <string name="help_tags_heading">Tags</string>
+    <string name="help_links">-Ändere den Link, der über der WebView angezeigt wird, über den Stift\n-Öffne den Link über das Symbol neben dem Stift im Browser</string>
+    <string name="help_attachments_heading">Anhänge</string>
+    <string name="help_notes_heading">Notizen</string>
+    <string name="help_notes">-Erstelle eine neue Notiz über das \"+\" Symbol\n-Langes Klicken auf eine Notiz öffnet ein Kontextmenü mit verschiedenen Aktionsmöglichkeiten</string>
+    <string name="help_attachments">-Mit dem download Symbol kann die angehängte Datei in den eigenen Dateien gespeichert werden</string>
+    <string name="help_notebooks_heading">Notizbücher</string>
+    <string name="help_extNotebooks_heading">Externe Notizbücher</string>
+    <string name="help_notebooks">-Schließe ein Notizbuch über das 3-Punkt Menü\n-Langes Klicken auf ein Notizbuch im Notizbuchmenü öffnet ein Kontextmenü zum Umbenennen und Löschen</string>
+    <string name="help_extNotebooks">-Verschieben, umbenennen oder löschen der Datei entfernt das externe Notizbuch aus der Liste</string>
+    <string name="menu_duplicate">Duplizieren</string>
 </resources>

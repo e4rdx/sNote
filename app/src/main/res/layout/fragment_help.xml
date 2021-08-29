@@ -20,20 +20,148 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/help_notebooks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/help_checklist_heading"
+                android:onClick="toggleHelp"
+                android:text="@string/help_notebooks_heading"
                 android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/help_notebooks_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_notebooks"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/help_extNotebooks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="toggleHelp"
+                android:text="@string/help_extNotebooks_heading"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/help_extNotebooks_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_extNotebooks"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/help_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="toggleHelp"
+                android:text="@string/help_notes_heading"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/help_notes_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_notes"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/help_tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="toggleHelp"
+                android:text="@string/help_tags_heading"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/help_tags_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_tags"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/help_checklists"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="toggleHelp"
+                android:text="@string/help_checklist_heading"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/help_checklists_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/help_checklist"
                 android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/help_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="toggleHelp"
+                android:text="@string/help_text_heading"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/help_text_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_text"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/help_links"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="toggleHelp"
+                android:text="@string/help_links_heading"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/help_links_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_links"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/help_attachments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="toggleHelp"
+                android:text="@string/help_attachments_heading"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/help_attachments_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_attachments"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

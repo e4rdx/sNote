@@ -1,5 +1,6 @@
 package com.e4rdx.snote.activities.notebookDisplayer;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -56,6 +57,44 @@ public class NotebookDisplayer extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    public void toggleHelp(View v){
+        int itemID = 0;
+        switch(v.getId()){
+            case R.id.help_attachments :
+                itemID = R.id.help_attachments_text;
+                break;
+            case R.id.help_extNotebooks :
+                itemID = R.id.help_extNotebooks_text;
+                break;
+            case R.id.help_checklists :
+                itemID = R.id.help_checklists_text;
+                break;
+            case R.id.help_links :
+                itemID = R.id.help_links_text;
+                break;
+            case R.id.help_notebooks :
+                itemID = R.id.help_notebooks_text;
+                break;
+            case R.id.help_notes :
+                itemID = R.id.help_notes_text;
+                break;
+            case R.id.help_tags :
+                itemID = R.id.help_tags_text;
+                break;
+            case R.id.help_text :
+                itemID = R.id.help_text_text;
+                break;
+        }
+        View itemToToggle = findViewById(itemID);
+        if(itemToToggle.getVisibility() == View.GONE){
+            itemToToggle.setVisibility(View.VISIBLE);
+        }
+        else{
+            itemToToggle.setVisibility(View.GONE);
+        }
     }
 
     @Override

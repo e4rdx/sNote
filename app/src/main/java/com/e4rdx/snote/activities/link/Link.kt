@@ -150,7 +150,7 @@ class Link : AppCompatActivity() {
     private fun getTags(): JSONArray {
         val tags = JSONArray()
         val fl = findViewById<View>(R.id.link_tags_flowlayout) as FlowLayout
-        if (fl.childCount > 2) {
+        if (fl.childCount > 1) {
             for (i in 1 until fl.childCount) {
                 try {
                     val current = fl.getChildAt(i) as Tag

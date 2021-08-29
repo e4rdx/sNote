@@ -9,11 +9,11 @@ import android.view.Gravity
 import android.webkit.WebView
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
+import com.e4rdx.snote.R
 import com.e4rdx.snote.activities.attachments.AttachmentEditor
 import com.e4rdx.snote.activities.checklistEditor.ChecklistEditor
-import com.e4rdx.snote.activities.texteditor.TextEditor
 import com.e4rdx.snote.activities.link.Link
-import com.e4rdx.snote.R
+import com.e4rdx.snote.activities.texteditor.TextEditor
 import com.e4rdx.snote.dialogs.TextInputDialog
 import com.e4rdx.snote.dialogs.YesNoDialog
 import org.json.JSONException
@@ -28,6 +28,7 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
     var jsonData : String? = null
     var index : Int? = null
     var dropdown : LinearLayout? = null
+    var type: String
 
     init {
         this.orientation = VERTICAL
@@ -38,6 +39,7 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
         jsonData = jsonObj.toString()
 
         this.index = index
+        this.type = noteType
 
         val buttonsRoot = LinearLayout(context)
         buttonsRoot.orientation = HORIZONTAL
@@ -264,6 +266,12 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
                 DialogInterface.BUTTON_POSITIVE -> {
                     val parent = this.parent as LinearLayout
                     parent.removeView(this)
+                    //If we delete an attachment with image, we need to remove the image
+                    if (type == "image") {
+                        val path = JSONObject(jsonData).getString("src")
+                        val f = File(path)
+                        f.delete()
+                    }
                 }
                 DialogInterface.BUTTON_NEGATIVE -> {
                 }

@@ -262,7 +262,7 @@ public class TextEditor extends AppCompatActivity {
     private JSONArray getTags(){
         JSONArray tags = new JSONArray();
         FlowLayout fl = (FlowLayout) findViewById(R.id.textEditor_tags_flowlayout);
-        if(fl.getChildCount() > 2) {
+        if(fl.getChildCount() > 1) {
             for (int i = 1; i < fl.getChildCount(); i++) {
                 try {
                     Tag current = (Tag) fl.getChildAt(i);
