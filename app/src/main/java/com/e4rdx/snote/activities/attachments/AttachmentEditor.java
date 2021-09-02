@@ -3,10 +3,12 @@ package com.e4rdx.snote.activities.attachments;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -98,6 +100,12 @@ public class AttachmentEditor extends AppCompatActivity {
         }
 
         getSupportActionBar().setTitle(name);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean showTags = sharedPreferences.getBoolean("preference_showTagsDefault", false);
+        if(showTags){
+            findViewById(R.id.scrollView_attachments_tags).setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="check_box_preference_1"
-        android:title="Example Preference" />
-    <CheckBoxPreference
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:defaultValue="false"
+        android:iconSpaceReserved="false"
+        android:key="preference_showTagsDefault"
+        android:title="Show Tags by default"
+        app:iconSpaceReserved="false" />
+    <CheckBoxPreference
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:defaultValue="false"
+        android:iconSpaceReserved="false"
         android:key="preference_externalNotebooks"
-        android:title="Experimental: External Notebooks" />
+        android:title="Experimental: External Notebooks"
+        app:iconSpaceReserved="false" />
 </PreferenceScreen>

@@ -86,4 +86,12 @@
     <string name="help_notebooks">-Schließe ein Notizbuch über das 3-Punkt Menü\n-Langes Klicken auf ein Notizbuch im Notizbuchmenü öffnet ein Kontextmenü zum Umbenennen und Löschen</string>
     <string name="help_extNotebooks">-Verschieben, umbenennen oder löschen der Datei entfernt das externe Notizbuch aus der Liste</string>
     <string name="menu_duplicate">Duplizieren</string>
+    <string name="about_licenses_beginning">Im folgenden befindet sich eine Liste aller Libraries,Icons und so weiter die sNote mit ihrer jeweiligen Lizenz nutzt:</string>
+    <string name="about_privacy_notice">Datenschutzhinweis</string>
+    <string name="about_about">Dies ist eine quelloffene App entwickelt von e4rdx.</string>
+    <string name="about_licenses_title">Opensource Lizenzen</string>
+    <string name="about_privacy_notice_text">Diese App sammelt keine persönlichen Daten. Nur die Einstellungen und Notizbücher werden gespeichert. In den Notizbüchern befinden sich alle eingegebenen Notizen und Anhänge. Wo du die Notizbücher speicherst ist deine Sache. Aber bedenke immer: Andere Apps können möglicherweise auf externe/exportierte Notizbücher zugreifen!</string>
+    <string name="about_source_info">Der gesamte Quellcode ist unter folgender Lizenz auf Github verfügbar:</string>
+    <string name="about_link_github">Weiter zu Github</string>
+    <string name="about_link_website">Weiter zur Website</string>
 </resources>

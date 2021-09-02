@@ -3,6 +3,7 @@ package com.e4rdx.snote.activities.startmenu;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
 import android.app.Activity;
@@ -65,6 +66,8 @@ public class StartMenuActivity extends AppCompatActivity {
         new SNoteManager().checkAttachments(getApplicationContext());
 
         checkConfigFile();
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         try {
             JSONObject jsonConfig = new JSONObject(readFile(getApplicationContext().getFilesDir() + "config.json"));

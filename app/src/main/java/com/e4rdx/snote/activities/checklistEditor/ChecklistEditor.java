@@ -3,10 +3,12 @@ package com.e4rdx.snote.activities.checklistEditor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -87,6 +89,12 @@ public class ChecklistEditor extends AppCompatActivity {
             jsonData.put("entrys", new JSONArray());
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean showTags = sharedPreferences.getBoolean("preference_showTagsDefault", false);
+        if(showTags){
+            findViewById(R.id.scrollView_checklisteditor_tags).setVisibility(View.VISIBLE);
         }
     }
 

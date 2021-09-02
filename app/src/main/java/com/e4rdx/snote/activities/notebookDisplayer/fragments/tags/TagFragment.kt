@@ -37,16 +37,6 @@ class TagFragment : Fragment() {
 
     data class SearchResult(val jsonData: JSONObject, val index: Int)
 
-    override fun onDestroy() {
-        //saveTags()
-        super.onDestroy()
-    }
-
-    override fun onStop() {
-        //saveTags()
-        super.onStop()
-    }
-
     fun saveTags(){
         //val jsonObj = SNoteManager.readNoteFile(requireContext())
         val linearLayoutTags = requireActivity().findViewById<FlowLayout>(R.id.tags_flowlayout)

@@ -3,10 +3,12 @@ package com.e4rdx.snote.activities.texteditor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,7 +24,6 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.e4rdx.snote.activities.checklistEditor.ChecklistEditor;
 import com.e4rdx.snote.activities.checklistEditor.Tag;
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
 import com.e4rdx.snote.R;
@@ -94,6 +95,12 @@ public class TextEditor extends AppCompatActivity {
 
         //configSTT();
         sttRunning = false;
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean showTags = sharedPreferences.getBoolean("preference_showTagsDefault", false);
+        if(showTags){
+            findViewById(R.id.scrollView_texteditor_tags).setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

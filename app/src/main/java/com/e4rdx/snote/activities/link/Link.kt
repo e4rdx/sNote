@@ -13,6 +13,7 @@ import android.webkit.WebViewClient
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import com.e4rdx.snote.R
 import com.e4rdx.snote.activities.checklistEditor.Tag
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer
@@ -84,6 +85,12 @@ class Link : AppCompatActivity() {
         }
 
         textviewLink!!.text = link
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val showTags = sharedPreferences.getBoolean("preference_showTagsDefault", false)
+        if (showTags) {
+            findViewById<View>(R.id.scrollView_link_tags).visibility = View.VISIBLE
+        }
     }
 
     fun addTag(v: View) {

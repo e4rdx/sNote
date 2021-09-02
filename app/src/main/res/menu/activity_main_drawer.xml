@@ -17,7 +17,7 @@
             android:icon="@drawable/ic_task"
             android:title="@string/menu_tasks" />
     </group>
-    <group >
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_preferences"
             android:icon="@drawable/ic_settings"
