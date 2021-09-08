@@ -29,6 +29,7 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
     var index : Int? = null
     var dropdown : LinearLayout? = null
     var type: String
+    var displayName: String = ""
 
     init {
         this.orientation = VERTICAL
@@ -36,6 +37,7 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
 
         val noteType = jsonObj.getString("type")
         val noteName = jsonObj.getString("name")
+        displayName = noteName
         jsonData = jsonObj.toString()
 
         this.index = index
@@ -164,17 +166,26 @@ class Note(context: Context, jsonObj: JSONObject, index: Int): LinearLayout(cont
             when (which) {
                 DialogInterface.BUTTON_POSITIVE -> {
                     val newName = popup.getText()
-                    btn_open!!.text = newName
-                    val json = JSONObject(jsonData.toString())
-                    json.put("name", newName)
-                    jsonData = json.toString()
+                    if(newName.trim() != "") {
+                        btn_open!!.text = newName
+                        val json = JSONObject(jsonData.toString())
+                        json.put("name", newName)
+                        jsonData = json.toString()
+                        displayName = newName
+                    }
+                    else{
+                        Toast.makeText(context, context.getText(R.string.toast_invalidName), Toast.LENGTH_SHORT).show()
+                    }
                 }
                 DialogInterface.BUTTON_NEGATIVE -> {
                 }
             }
         }
         popup.setupButtons(context.getString(R.string.menu_rename), context.getString(R.string.cancel), dialogClickListener)
+        popup.setText(displayName)
+        popup.selectAllOnFocus()
         popup.show()
+        popup.openKeyboard(context)
     }
 
     private fun createDropdown(type: String){

@@ -94,4 +94,12 @@
     <string name="about_source_info">Der gesamte Quellcode ist unter folgender Lizenz auf Github verfügbar:</string>
     <string name="about_link_github">Weiter zu Github</string>
     <string name="about_link_website">Weiter zur Website</string>
+    <string name="toast_invalidName">Unerlaubter Name</string>
+    <string name="prefs_show_tags_by_default">Zeige Tags standartmäßig an</string>
+    <string name="menu_title_saveAs">Speichern unter</string>
+    <string name="menu_title_saveAndClose">Speichern und schließen</string>
+    <string name="menu_title_addTag">Tag hinzufügen</string>
+    <string name="menu_title_stt">Sprache zu Text</string>
+    <string name="menu_title_edit">Bearbeiten</string>
+    <string name="menu_title_open">Öffnen</string>
 </resources>

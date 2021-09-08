@@ -10,6 +10,6 @@
     <item
         android:id="@+id/attachment_saveas"
         android:icon="@drawable/ic_save_as"
-        android:title="Item"
+        android:title="@string/menu_title_saveAs"
         app:showAsAction="always" />
 </menu>

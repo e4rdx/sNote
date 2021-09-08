@@ -5,6 +5,6 @@
     <item
         android:id="@+id/menu_tag_addTag"
         android:icon="@drawable/ic_add"
-        android:title="Add Tag"
+        android:title="@string/menu_title_addTag"
         app:showAsAction="always" />
 </menu>

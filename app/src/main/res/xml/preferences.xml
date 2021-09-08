@@ -8,14 +8,6 @@
         android:defaultValue="false"
         android:iconSpaceReserved="false"
         android:key="preference_showTagsDefault"
-        android:title="Show Tags by default"
-        app:iconSpaceReserved="false" />
-    <CheckBoxPreference
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:defaultValue="false"
-        android:iconSpaceReserved="false"
-        android:key="preference_externalNotebooks"
-        android:title="Experimental: External Notebooks"
+        android:title="@string/prefs_show_tags_by_default"
         app:iconSpaceReserved="false" />
 </PreferenceScreen>

@@ -99,4 +99,12 @@
     <string name="about_source_info">The complete sourcecode is under following license available on Github:</string>
     <string name="about_link_github">To Github</string>
     <string name="about_link_website">To Website</string>
+    <string name="toast_invalidName">Invalid name</string>
+    <string name="prefs_show_tags_by_default">Show tags by default</string>
+    <string name="menu_title_saveAs">Save as</string>
+    <string name="menu_title_saveAndClose">Save and close</string>
+    <string name="menu_title_addTag">Add tag</string>
+    <string name="menu_title_stt">Speech to text</string>
+    <string name="menu_title_edit">Edit</string>
+    <string name="menu_title_open">Open</string>
 </resources>

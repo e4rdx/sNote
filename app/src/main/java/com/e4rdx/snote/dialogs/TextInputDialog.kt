@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.text.Editable
 import android.text.InputType
 import android.text.SpannableStringBuilder
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 
 
@@ -36,5 +37,17 @@ class TextInputDialog(context: Context, title: String, message: String) : AlertD
     fun setText(text: String){
         val editable: Editable = SpannableStringBuilder(text)
         input!!.text = editable
+    }
+
+    fun selectAllOnFocus(){
+        input!!.setSelectAllOnFocus(true)
+    }
+
+    fun openKeyboard(context: Context){
+        input!!.requestFocus()
+        input!!.postDelayed({
+            val keyboard: InputMethodManager? = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+            keyboard!!.showSoftInput(input, 0)
+        }, 200)
     }
 }

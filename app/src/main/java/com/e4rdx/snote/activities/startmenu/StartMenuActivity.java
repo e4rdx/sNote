@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -98,12 +99,6 @@ public class StartMenuActivity extends AppCompatActivity {
         loadFiles();
 
         shouldOpenShortcut(getIntent());
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean displayExternal = sharedPreferences.getBoolean("preference_externalNotebooks", false);
-        if(!displayExternal){
-            findViewById(R.id.button_openExternalNotebook).setVisibility(View.GONE);
-        }
     }
 
     private void shouldOpenShortcut(Intent i){
@@ -129,13 +124,21 @@ public class StartMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(i == DialogInterface.BUTTON_POSITIVE){
-                    currentContextItem.rename(popup.getText());
-                    loadFiles();
+                    if(!popup.getText().trim().matches("")) {
+                        currentContextItem.rename(popup.getText());
+                        loadFiles();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), getText(R.string.toast_invalidName), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         };
         popup.setupButtons(getString(R.string.menu_rename), getString(R.string.cancel), dialogClickListener);
+        popup.setText(currentContextItem.getDisplayName());
+        popup.selectAllOnFocus();
         popup.show();
+        popup.openKeyboard(getApplicationContext());
     }
 
     @Override
@@ -164,7 +167,6 @@ public class StartMenuActivity extends AppCompatActivity {
     }
 
     private void addExternalNotebook(Uri uri){
-
         ExternalNotebookManager.addExternalNotebook(getApplicationContext(), uri);
     }
 
@@ -379,20 +381,15 @@ public class StartMenuActivity extends AppCompatActivity {
             }
         }
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean displayExternal = sharedPreferences.getBoolean("preference_externalNotebooks", false);
-
-        if(displayExternal) {
-            LinkedList<Uri> externals = ExternalNotebookManager.getExternalNotebooks(getApplicationContext());
-            if (externals.size() > 0) {
-                for (int i = 0; i < externals.size(); i++) {
-                    if(ExternalNotebookManager.hasAccessToUri(getApplicationContext(), externals.get(i))){
-                        ExternalFile s = new ExternalFile(this, externals.get(i));
-                        fileList.addView(s);
-                    }
-                    else{
-                        ExternalNotebookManager.removeExternalNotebook(getApplicationContext(), externals.get(i));
-                    }
+        LinkedList<Uri> externals = ExternalNotebookManager.getExternalNotebooks(getApplicationContext());
+        if (externals.size() > 0) {
+            for (int i = 0; i < externals.size(); i++) {
+                if(ExternalNotebookManager.hasAccessToUri(getApplicationContext(), externals.get(i))){
+                    ExternalFile s = new ExternalFile(this, externals.get(i));
+                    fileList.addView(s);
+                }
+                else{
+                    ExternalNotebookManager.removeExternalNotebook(getApplicationContext(), externals.get(i));
                 }
             }
         }

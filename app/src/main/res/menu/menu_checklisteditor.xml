@@ -10,6 +10,6 @@
     <item
         android:id="@+id/menu_checklisteditor_save"
         android:icon="@drawable/ic_save"
-        android:title="Title"
+        android:title="@string/menu_title_saveAndClose"
         app:showAsAction="always" />
 </menu>
