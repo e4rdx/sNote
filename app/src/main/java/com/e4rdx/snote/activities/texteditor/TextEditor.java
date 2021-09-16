@@ -1,14 +1,8 @@
 package com.e4rdx.snote.activities.texteditor;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
-
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,9 +18,14 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
+import com.e4rdx.snote.R;
+import com.e4rdx.snote.activities.basicNoteEditor.BasicNoteEditor;
 import com.e4rdx.snote.activities.checklistEditor.Tag;
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer;
-import com.e4rdx.snote.R;
 import com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout;
 import com.e4rdx.snote.dialogs.SelectTagDialog;
 import com.e4rdx.snote.utils.SNoteManager;
@@ -39,80 +38,51 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Locale;
 
-public class TextEditor extends AppCompatActivity {
+public class TextEditor extends BasicNoteEditor {
     private EditText textInputField;
-    private String noteName;
-    private JSONObject jsonData;
-    private String noteText;
-    private boolean editMode;
-    private int index;
     private boolean sttRunning;
     private Menu menu;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        //setContentView(R.layout.activity_text_editor);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_text_editor);
 
-        textInputField = (EditText)findViewById(R.id.texteditor_textfield);
-        Bundle extras = getIntent().getExtras();
-
-        noteText = "";
-
-        editMode = extras.getBoolean("edit");
-
-        if(editMode){
-            JSONObject recievedJson = null;
-            try {
-                recievedJson = new JSONObject(extras.getString("jsonData"));
-                noteName = recievedJson.getString("name");
-                noteText = recievedJson.getString("text");
-                textInputField.setText(noteText);
-                index = extras.getInt("index");
-                JSONArray tags = recievedJson.getJSONArray("tags");
-                for(int i = 0; i < tags.length(); i++){
-                    Tag tag = new Tag(TextEditor.this, tags.getString(i));
-                    FlowLayout fl = (FlowLayout) findViewById(R.id.textEditor_tags_flowlayout);
-                    fl.addView(tag);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        else{
-            noteName = extras.getString("name");
-        }
-        getSupportActionBar().setTitle(noteName);
-
-        jsonData = new JSONObject();
-        try {
-            jsonData.put("name", noteName);
-            jsonData.put("type", "text");
-            jsonData.put("text", "");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //configSTT();
+        tag_flowlayout = R.id.textEditor_tags_flowlayout;
         sttRunning = false;
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean showTags = sharedPreferences.getBoolean("preference_showTagsDefault", false);
         if(showTags){
             findViewById(R.id.scrollView_texteditor_tags).setVisibility(View.VISIBLE);
         }
     }
 
     @Override
-    public void onBackPressed() {
-        saveNote();
+    protected int getLayoutID() {
+        return R.layout.activity_text_editor;
     }
 
-    public void saveNote(){
-        noteText = textInputField.getText().toString();
+    @Override
+    public void onEditNote(JSONObject receivedJson) {
+        textInputField = (EditText)findViewById(R.id.texteditor_textfield);
+        try {
+            textInputField.setText(receivedJson.getString("text"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onCreatedNote(Bundle b) {
+
+    }
+
+    @Override
+    public void onSaveAndExit() {
+        String noteText = textInputField.getText().toString();
         try {
             jsonData.put("text", noteText);
             jsonData.put("tags", getTags());
+            jsonData.put("type", "text");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -122,6 +92,20 @@ public class TextEditor extends AppCompatActivity {
         i.putExtra("edit", editMode);
         i.putExtra("index", index);
         startActivity(i);
+    }
+
+    @Override
+    public void onLoadTags(JSONArray tags) {
+        try {
+            for(int i = 0; i < tags.length(); i++){
+                Tag tag;
+                tag = new Tag(TextEditor.this, tags.getString(i));
+                FlowLayout fl = (FlowLayout) findViewById(R.id.textEditor_tags_flowlayout);
+                fl.addView(tag);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -222,7 +206,7 @@ public class TextEditor extends AppCompatActivity {
         ScrollView textEditor = findViewById(R.id.scrollView_texteditor_tags);
         switch (item.getItemId()){
             case R.id.texteditor_save:
-                saveNote();
+                onSaveAndExit();
                 return true;
             case R.id.texteditor_stt:
                 stt();
@@ -236,50 +220,6 @@ public class TextEditor extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void addTag(){
-        JSONArray jsonTags = SNoteManager.getAllTags(getApplicationContext());
-        String[] tags = new String[jsonTags.length()];
-        for(int i = 0; i < jsonTags.length(); i++){
-            try {
-                tags[i] = jsonTags.getString(i);
-            } catch (JSONException e){
-                e.printStackTrace();
-            }
-        }
-        SelectTagDialog dialog = new SelectTagDialog(TextEditor.this, getString(R.string.AddTag), tags);
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int state) {
-                if(state == DialogInterface.BUTTON_POSITIVE){
-                    LinkedList<String> choices = dialog.getChoices();
-                    for(int i = 0; i < choices.size(); i++){
-                        Tag tag = new Tag(TextEditor.this, choices.get(i));
-                        FlowLayout fl = (FlowLayout) findViewById(R.id.textEditor_tags_flowlayout);
-                        fl.addView(tag);
-                    }
-                }
-            }
-        };
-        dialog.setupButtons(getString(R.string.add), getString(R.string.cancel), dialogClickListener);
-        dialog.create().show();
-    }
-
-    private JSONArray getTags(){
-        JSONArray tags = new JSONArray();
-        FlowLayout fl = (FlowLayout) findViewById(R.id.textEditor_tags_flowlayout);
-        if(fl.getChildCount() > 1) {
-            for (int i = 1; i < fl.getChildCount(); i++) {
-                try {
-                    Tag current = (Tag) fl.getChildAt(i);
-                    tags.put(current.getName());
-                } catch (ClassCastException e){
-                    e.printStackTrace();
-                }
-            }
-        }
-        return tags;
     }
 
     public void addNewTag(View v){

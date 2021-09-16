@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/background_tag"
-                    android:onClick="addTag"
+                    android:onClick="addNewTag"
                     android:text="@string/AddTag"
                     android:textSize="12sp" />
             </com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout>
