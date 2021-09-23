@@ -1,5 +1,6 @@
 package com.e4rdx.snote.activities.notebookDisplayer.fragments.notebook;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,7 +32,6 @@ import org.json.JSONObject;
 
 public class NotebookFragment extends Fragment {
     private View myRoot;
-    private JSONArray noteArray;
     private JSONObject jsonObj;
     private Note currentContextItem;
 
@@ -59,7 +59,6 @@ public class NotebookFragment extends Fragment {
         }
 
         try {
-            //jsonObj.put("notes", noteArray);
             jsonObj.put("notes", notes);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -68,12 +67,13 @@ public class NotebookFragment extends Fragment {
             jsonObj = new JSONObject();
         }
 
-        if(new ConfigManager(getActivity().getApplicationContext()).isExternalOpen()){
-            ExternalNotebookManager.saveExternalNotebook(getActivity().getApplicationContext(), jsonObj.toString(),
-                    Uri.parse(new ConfigManager(getActivity().getApplicationContext()).getExternalUri()));
-        }
-        else {
-            new SNoteManager().saveCurrent(jsonObj.toString(), getActivity().getApplicationContext());
+        if(SNoteManager.notesChanged(getActivity().getApplicationContext(), jsonObj.toString())) {
+            if (new ConfigManager(getActivity().getApplicationContext()).isExternalOpen()) {
+                ExternalNotebookManager.saveExternalNotebook(getActivity().getApplicationContext(), jsonObj.toString(),
+                        Uri.parse(new ConfigManager(getActivity().getApplicationContext()).getExternalUri()));
+            } else {
+                new SNoteManager().saveCurrent(jsonObj.toString(), getActivity().getApplicationContext());
+            }
         }
 
         super.onStop();
@@ -107,7 +107,7 @@ public class NotebookFragment extends Fragment {
 
         try {
             jsonObj = new JSONObject(new SNoteManager().readFile(getActivity().getApplicationContext().getFilesDir() + "/actualFile/noteFile"));
-            noteArray = jsonObj.getJSONArray("notes");
+            JSONArray noteArray = jsonObj.getJSONArray("notes");
             if(additionalNote != null){
                 noteArray.put(additionalNote);
             }
@@ -129,6 +129,7 @@ public class NotebookFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){

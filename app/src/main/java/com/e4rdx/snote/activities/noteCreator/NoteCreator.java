@@ -59,10 +59,11 @@ public class NoteCreator extends AppCompatActivity {
                 i.putExtra("edit", false);
                 startActivity(i);
             } else if (rb_task.isChecked()) {
-                i = new Intent(getApplicationContext(), Task_manager.class);
+                /*i = new Intent(getApplicationContext(), Task_manager.class);
                 i.putExtra("name", editText_noteName.getText().toString());
                 i.putExtra("edit", false);
-                startActivity(i);
+                startActivity(i);*/
+                Toast.makeText(getApplicationContext(), "Under Construction", Toast.LENGTH_LONG).show();
             } else if (rb_link.isChecked()) {
                 i = new Intent(getApplicationContext(), Link.class);
                 i.putExtra("name", editText_noteName.getText().toString());
@@ -74,15 +75,6 @@ public class NoteCreator extends AppCompatActivity {
                 i.putExtra("edit", false);
                 startActivity(i);
             }
-        }
-        else{
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_enter_name), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void imageClick(View v){
-        if(!editText_noteName.getText().toString().matches("")) {
-            dispatchTakePictureIntent();
         }
         else{
             Toast.makeText(getApplicationContext(), getString(R.string.toast_enter_name), Toast.LENGTH_LONG).show();

@@ -40,6 +40,11 @@ public class SNoteManager {
         return jsonObj;
     }
 
+    public static boolean notesChanged(Context context, String notes){
+        String savedNotes = readNoteFile(context).toString();
+        return !savedNotes.equals(notes);
+    }
+
     public static JSONArray getAllTags(Context context){
         JSONObject jsonObj = readNoteFile(context);
         JSONArray tags = new JSONArray();
