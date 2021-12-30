@@ -60,6 +60,9 @@ public class NotebookFragment extends Fragment {
 
         try {
             jsonObj.put("notes", notes);
+
+            final ScrollView scrollview = ((ScrollView) myRoot.findViewById(R.id.scrollview_notelist));
+            jsonObj.put("scrolled", scrollview.getScrollY());
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (NullPointerException e){
@@ -127,6 +130,22 @@ public class NotebookFragment extends Fragment {
 
 
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(() -> {
+            try {
+                final ScrollView scrollview = ((ScrollView) myRoot.findViewById(R.id.scrollview_notelist));
+                scrollview.smoothScrollBy(0, jsonObj.getInt("scrolled"));
+            }
+            catch (JSONException e){
+                e.printStackTrace();
+            }
+        }, 100);
     }
 
     @SuppressLint("NonConstantResourceId")

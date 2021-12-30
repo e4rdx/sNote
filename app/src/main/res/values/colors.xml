@@ -11,4 +11,7 @@
     <color name="invisible">#00000000</color>
     <color name="grey">#BAB3B3</color>
     <color name="link_blue">#0C67E1</color>
+    <color name="snote_blue">#0089AC</color>
+    <color name="snote_blue_dark">#006E8A</color>
+    <color name="snote_bgIcon">#27CCDC</color>
 </resources>

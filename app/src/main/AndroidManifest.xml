@@ -17,14 +17,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Twonote">
+        android:theme="@style/Theme.SNote">
         <activity android:name=".activities.link.Link" />
         <activity android:name=".activities.task.Task_manager" />
         <activity android:name=".activities.attachments.AttachmentEditor" />
         <activity
             android:name=".activities.notebookDisplayer.NotebookDisplayer"
             android:label="@string/title_activity_notebook_displayer"
-            android:theme="@style/Theme.Twonote.NoActionBar" />
+            android:theme="@style/Theme.SNote.NoActionBar" />
         <activity android:name=".activities.texteditor.TextEditor" />
         <activity android:name=".activities.createNotebook.NotebookCreator" />
         <activity android:name=".activities.checklistEditor.ChecklistEditor" />
