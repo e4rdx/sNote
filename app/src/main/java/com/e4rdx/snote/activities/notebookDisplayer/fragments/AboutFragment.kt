@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.e4rdx.snote.R
 import com.e4rdx.snote.activities.notebookDisplayer.NotebookDisplayer
+import com.mikepenz.aboutlibraries.LibsBuilder
 
 
 class AboutFragment : Fragment() {
@@ -44,6 +46,12 @@ class AboutFragment : Fragment() {
         }
 
         val wv = myRoot.findViewById<WebView>(R.id.about_webview) as WebView
+        wv.visibility = View.INVISIBLE
         wv.loadUrl("file:///android_asset/about.html")
+        wv.visibility = View.VISIBLE
+
+        myRoot.findViewById<Button>(R.id.btn_os_notice).setOnClickListener {
+            LibsBuilder().start(requireContext())
+        }
     }
 }

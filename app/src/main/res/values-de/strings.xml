@@ -102,4 +102,6 @@
     <string name="menu_title_stt">Sprache zu Text</string>
     <string name="menu_title_edit">Bearbeiten</string>
     <string name="menu_title_open">Öffnen</string>
+    <string name="about_view_os_notices">Clicke um Opensource Lizenzen angezeigt zu bekommen</string>
+    <string name="drawing">Zeichnung</string>
 </resources>

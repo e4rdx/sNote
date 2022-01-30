@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.e4rdx.snote.activities.attachments.AttachmentEditor;
 import com.e4rdx.snote.activities.checklistEditor.ChecklistEditor;
+import com.e4rdx.snote.activities.drawing.Drawing;
 import com.e4rdx.snote.activities.texteditor.TextEditor;
 import com.e4rdx.snote.activities.link.Link;
 import com.e4rdx.snote.activities.task.Task_manager;
@@ -31,6 +32,7 @@ public class NoteCreator extends AppCompatActivity {
     private RadioButton rb_link;
     private RadioButton rb_text;
     private RadioButton rb_checklist;
+    private RadioButton rb_drawing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class NoteCreator extends AppCompatActivity {
         rb_link = findViewById(R.id.newNote_link);
         rb_task = findViewById(R.id.newNote_task);
         rb_text = findViewById(R.id.newNote_text);
+        rb_drawing = findViewById(R.id.newNote_drawing);
     }
 
     public void createNote(View v){
@@ -71,6 +74,11 @@ public class NoteCreator extends AppCompatActivity {
                 startActivity(i);
             } else if (rb_checklist.isChecked()) {
                 i = new Intent(getApplicationContext(), ChecklistEditor.class);
+                i.putExtra("name", editText_noteName.getText().toString());
+                i.putExtra("edit", false);
+                startActivity(i);
+            } else if (rb_drawing.isChecked()) {
+                i = new Intent(getApplicationContext(), Drawing.class);
                 i.putExtra("name", editText_noteName.getText().toString());
                 i.putExtra("edit", false);
                 startActivity(i);

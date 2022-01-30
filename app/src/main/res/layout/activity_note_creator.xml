@@ -45,7 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:button="@drawable/ic_task"
-            android:text="@string/task" />
+            android:text="@string/task"
+            android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/newNote_text"
@@ -60,6 +61,14 @@
             android:layout_height="wrap_content"
             android:button="@drawable/ic_external_link"
             android:text="@string/link" />
+
+        <RadioButton
+            android:id="@+id/newNote_drawing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_brush"
+            android:text="@string/drawing"
+            android:visibility="gone" />
     </RadioGroup>
 
     <EditText

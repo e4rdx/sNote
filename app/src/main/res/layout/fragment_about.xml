@@ -73,6 +73,7 @@
                         android:id="@+id/about_snoteLicenses"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="#DEDEDE"
                         android:text="@string/about_snote_license"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
@@ -119,6 +120,13 @@
                 android:text="@string/about_licenses_beginning"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_os_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_view_os_notices"
+                android:textAllCaps="false" />
 
             <WebView
                 android:id="@+id/about_webview"

@@ -37,7 +37,9 @@ public class NotebookFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         NotebookDisplayer act = (NotebookDisplayer) getActivity();
-        act.fab.setVisibility(View.VISIBLE);
+        if(act.fab != null) {
+            act.fab.setVisibility(View.VISIBLE);
+        }
         myRoot = inflater.inflate(R.layout.fragment_home, container, false);
         return myRoot;
     }
@@ -119,7 +121,6 @@ public class NotebookFragment extends Fragment {
             }
             for(int i = 0; i < noteArray.length(); i++){
                 JSONObject noteObj = noteArray.getJSONObject(i);
-                //Note.kt noteButton = new Note.kt(getActivity().getApplicationContext(), noteObj, i);
                 Note noteButton = new Note(getActivity().getApplicationContext(), noteObj, i);
                 noteList.addView(noteButton);
                 registerForContextMenu(noteButton.getBtn_open());
@@ -196,7 +197,6 @@ public class NotebookFragment extends Fragment {
 
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-        //super.onCreateContextMenu(menu, v, menuInfo);
         currentContextItem = (Note) v.getParent().getParent().getParent();
         MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.note_contextmenu, menu);

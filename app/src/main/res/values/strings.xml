@@ -107,4 +107,8 @@
     <string name="menu_title_stt">Speech to text</string>
     <string name="menu_title_edit">Edit</string>
     <string name="menu_title_open">Open</string>
+    <string name="about_view_os_notices">Click to view opensource notices</string>
+    <string name="drawing">Drawing</string>
+    <!-- Strings used for fragments for navigation -->
+
 </resources>
