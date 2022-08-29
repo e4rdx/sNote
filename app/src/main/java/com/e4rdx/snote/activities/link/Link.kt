@@ -12,6 +12,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import com.e4rdx.snote.R
 import com.e4rdx.snote.activities.basicNoteEditor.BasicNoteEditor
 import com.e4rdx.snote.activities.checklistEditor.Tag
@@ -126,7 +127,13 @@ class Link : BasicNoteEditor() {
     }
 
     private fun openInBrowser(){
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        if (browserIntent.resolveActivity(packageManager) != null) {
+            startActivity(browserIntent);
+        }
+        else{
+            Toast.makeText(applicationContext, getText(R.string.action_not_available), Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

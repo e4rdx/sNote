@@ -16,7 +16,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.e4rdx.snote.R;
+import com.e4rdx.snote.activities.notebookDisplayer.fragments.tags.FlowLayout;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -55,7 +58,9 @@ public class ChecklistEntry extends LinearLayout {
         noteText.setTextSize(20);
         noteText.setOnTouchListener(new OnSwipeTouchListener(context) {
             public void onSwipeRight() {
-                Snackbar s = Snackbar.make(parentLayout, R.string.checklist_removed_entry, Snackbar.LENGTH_LONG);
+                System.out.println("right swipe");
+                ConstraintLayout l = (ConstraintLayout) parentLayout.getParent().getParent();
+                Snackbar s = Snackbar.make(l.getChildAt(2), R.string.checklist_removed_entry, Snackbar.LENGTH_LONG);
                 s.setAction(R.string.undo, new View.OnClickListener(){
                     @Override
                     public void onClick(View view) {

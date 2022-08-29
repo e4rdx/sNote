@@ -104,4 +104,5 @@
     <string name="menu_title_open">Öffnen</string>
     <string name="about_view_os_notices">Clicke um Opensource Lizenzen angezeigt zu bekommen</string>
     <string name="drawing">Zeichnung</string>
+    <string name="action_not_available">Aktion nicht verfügbar</string>
 </resources>

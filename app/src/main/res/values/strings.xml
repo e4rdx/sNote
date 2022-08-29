@@ -109,6 +109,7 @@
     <string name="menu_title_open">Open</string>
     <string name="about_view_os_notices">Click to view opensource notices</string>
     <string name="drawing">Drawing</string>
+    <string name="action_not_available">Action not available</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>

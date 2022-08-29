@@ -34,6 +34,8 @@ android {
 apply plugin: "com.mikepenz.aboutlibraries.plugin"
 
 dependencies {
+    'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0'
     implementation "com.mikepenz:aboutlibraries-core:8.9.4"
     implementation "com.mikepenz:aboutlibraries:8.9.4"
     implementation 'com.github.mukeshsolanki:DrawingView-Android:1.0.13'

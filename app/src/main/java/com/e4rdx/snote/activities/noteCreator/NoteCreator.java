@@ -94,6 +94,7 @@ public class NoteCreator extends AppCompatActivity {
         try {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         } catch (ActivityNotFoundException e) {
+            Toast.makeText(getApplicationContext(), getString(R.string.action_not_available), Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }

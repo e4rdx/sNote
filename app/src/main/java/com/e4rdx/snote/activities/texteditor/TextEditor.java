@@ -31,7 +31,6 @@ public class TextEditor extends BasicNoteEditor {
         super.onCreate(savedInstanceState);
 
         tag_flowlayout = R.id.textEditor_tags_flowlayout;
-        textInputField = (EditText)findViewById(R.id.texteditor_textfield);
 
         if(showTags){
             findViewById(R.id.scrollView_texteditor_tags).setVisibility(View.VISIBLE);
@@ -46,6 +45,7 @@ public class TextEditor extends BasicNoteEditor {
     @Override
     public void onEditNote(JSONObject receivedJson) {
         try {
+            textInputField = (EditText)findViewById(R.id.texteditor_textfield);
             textInputField.setText(receivedJson.getString("text"));
         } catch (JSONException e) {
             e.printStackTrace();
